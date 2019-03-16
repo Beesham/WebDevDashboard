@@ -1,0 +1,32 @@
+/*
+Author: Beesham Sarendranauth
+*/
+
+header {
+    display: flex;
+    flex-direction: column;
+    background-color: green;
+}
+
+#homepage_title { 
+    align-self: flex-start;
+}
+
+.homepage_tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.homepage_tab_links {
+}
+
+#content_area {
+    display: flex;
+    flex-direction: row;
+}
+
+#homepage_login {
+   background-color: blue;
+   margin-left: auto;
+}
