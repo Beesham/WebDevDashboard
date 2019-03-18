@@ -1,7 +1,7 @@
 <?php
 //Author(s): Beesham Sarendranauth
 
-include '../../extras/databaseConfig.php';
+include_once '../../extras/databaseConfig.php';
 
 class DatabaseUtils {
 
