@@ -22,13 +22,16 @@ class DatabaseUtils {
     public static function login($username, $password) {
         //TODO
         $conn = self::connectTodb();
-        $stmt = $conn->prepare("SELECT username FROM users WHERE username = :username");
+        $stmt = $conn->prepare("SELECT password FROM users WHERE username = :username");
         $stmt->bindParam(':username', $username);
         $stmt->execute();       
         $row = $stmt->fetch();
 
         if(count($row) > 0) {
-            error_log("username from db: ".$row['username'] ,0);
+            if(strcmp($password, $row['password']) == 0) {
+                error_log("username from db: ".$row['password'] ,0);
+                return true;
+            } else return false;
         }
     }
 
