@@ -32,11 +32,42 @@ body {
 }
 
 #homepage_login {
-   border-style: solid;
-   padding: 20px 20px 20px 20px ;
-   background-color: blue;
-   margin-left: auto;
-   height: 100px;
+    border-style: solid;
+    padding: 20px 20px 20px 20px ;
+    margin-left: auto;
+    background-color: white;
+}
+
+input[type=text], input[type=password] {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.login_container button {
+    background-color: blue;
+    color: white;
+    padding: 14px 20px;
+    margin 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.login_container button:hover {
+    opacity: 0.8;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px;
+}
+
+img.avatar {
+    width: 40%;
+    border-radius: 50%;
 }
 
 .slides {display: none;}
