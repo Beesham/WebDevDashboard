@@ -11,6 +11,8 @@ class DatabaseUtils {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password); //pulls creds from databaseConfig.php
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo "Connected to database successfully: ".$dbname;
+
+            return $conn;
         }
         catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
@@ -19,8 +21,15 @@ class DatabaseUtils {
 
     public static function login($username, $password) {
         //TODO
-        self::connectTodb();
-        error_log("username: ".$username, 4);
+        $conn = self::connectTodb();
+        $stmt = $conn->prepare("SELECT username FROM users WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();       
+        $row = $stmt->fetch();
+
+        if(count($row) > 0) {
+            error_log("username from db: ".$row['username'] ,0);
+        }
     }
 
     static function logout() {
