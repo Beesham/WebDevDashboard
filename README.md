@@ -12,7 +12,8 @@ Create 2 files in the extras folder
 Place administractors password for the website in the adminConfig.php:
 ```<?php
   $admin_password = "XXXXX";
-?>```
+?>
+```
 
 Place database credentials in the databaseConfig.php:
 ```<?php
@@ -20,7 +21,8 @@ Place database credentials in the databaseConfig.php:
   $dbname = "YOUR DATABASE NAME";
   $username = "YOUR USERNAME";
   $password = "YOUR DB PASSWORD";
-?>```
+?>
+```
 
 ## Website Installation:
 //TODO
