@@ -10,13 +10,15 @@ Create 2 files in the extras folder
 - databaseConfig.php
 
 Place administractors password for the website in the adminConfig.php:
-```<?php
+```
+<?php
   $admin_password = "XXXXX";
 ?>
 ```
 
 Place database credentials in the databaseConfig.php:
-```<?php
+```
+<?php
   $servername = "YOUR SERVER NAME";
   $dbname = "YOUR DATABASE NAME";
   $username = "YOUR USERNAME";
