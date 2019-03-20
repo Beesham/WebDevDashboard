@@ -13,6 +13,7 @@
         $status = UserManager::login_user($_POST['username'], $_POST['password']);  
         if($status) {
             $_SESSION["logged_in"] = true;
+            UserManager::getUser($_POST['username']);
             HTTPUtils::redirectPage("/html/mainpage.html");
         } else {
             $_SESSION["logged_in"] = false;

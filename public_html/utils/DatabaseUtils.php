@@ -1,27 +1,29 @@
 <?php
 //Author(s): Beesham Sarendranauth
-
+include_once 'User.php';
 include_once '../../extras/databaseConfig.php';
 
 class DatabaseUtils {
 
-    static function connectToDb() {
+    private $conn;
+
+    function connectToDb() {
         global $username, $servername, $dbname, $password;
+        global $conn;
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password); //pulls creds from databaseConfig.php
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo "Connected to database successfully: ".$dbname;
 
-            return $conn;
+            //return $conn;
         }
         catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
     }
 
-    public static function login($username, $password) {
-        //TODO
-        $conn = self::connectTodb();
+    public function checkLogin($username, $password) {
+        global $conn;
         $stmt = $conn->prepare("SELECT password FROM users WHERE username = :username");
         $stmt->bindParam(':username', $username);
         $stmt->execute();       
@@ -34,10 +36,44 @@ class DatabaseUtils {
             } else return false;
         }
     }
+    
+    //Queries for user data
+    function queryUser($username) {
+        global $conn;
+        $stmt = $conn->prepare("Select u.firstname, u.lastname, u.email, i.bio, i.image
+                                    FROM users u, user_info i
+                                    WHERE u.username=i.username
+                                    AND u.username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();       
+        $row = $stmt->fetch();
+       
+        //Need to check of row count is > 0. This does not 
+        if(count($row) > 0) {
+            $user = new User();
+            $user->firstname = $row['firstname'];
+            $user->lastname = $row['lastname'];
+            $user->bio = $row['bio'];
+            $user->image = $row['image'];
+            $user->email = $row['email'];
 
-    static function logout() {
+            return $user;
+        }
+    }
+
+    //queries for user todo list. Parses the string into an array
+    function queryTodo($username) {
         //TODO
     }
 
+    //queries for user contact list. Parses the string into an array
+    function queryContactList($username) {
+        //TODO
+    }
+    
+    //query for tile visibility: true/false
+    function querySettings($username) {
+        //TODO
+    }
 }
 ?>
