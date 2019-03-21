@@ -6,5 +6,6 @@ class User {
     public $email;
     public $bio;
     public $image;
+    public $username;
 }
 ?>

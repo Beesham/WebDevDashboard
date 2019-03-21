@@ -2,6 +2,7 @@
 //Author: Beesham Sarendranauth
 include_once("../utils/DatabaseUtils.php");
 include_once("../utils/HTTPUtils.php");
+include_once("../utils/User.php");
 
 class UserManager {
 
@@ -24,10 +25,29 @@ class UserManager {
     }
 
     static function getUser($username) {
-       //TODO
         $db = UserManager::getdb();
         $user = $db->queryUser($username);
-        error_log($user->firstname);
+        return $user;
+    }
+    
+    static function checkIfUserExist($username) {
+        $user = UserManager::getUser($username);
+        $a = $user->username;
+        if(strcmp($a, $username) == 0) {
+            return true;
+        } else return false;
+    }
+
+    static function addUser($firstname, $lastname, $email, $password) {
+        //TODO
+        $db = UserManager::getdb();
+        $user = new User();
+        $user->firstname = $firstname;
+        $user->lastname = $lastname;
+        $user->email = $email;
+        $user->username = $email;
+        echo "Adding new user";
+        return $db->insertNewUser($user, $password); //return true or false if insert succeeded
     }
 }
 ?>

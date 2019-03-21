@@ -40,7 +40,7 @@ class DatabaseUtils {
     //Queries for user data
     function queryUser($username) {
         global $conn;
-        $stmt = $conn->prepare("Select u.firstname, u.lastname, u.email, i.bio, i.image
+        $stmt = $conn->prepare("Select u.username, u.firstname, u.lastname, u.email, i.bio, i.image
                                     FROM users u, user_info i
                                     WHERE u.username=i.username
                                     AND u.username = :username");
@@ -56,6 +56,7 @@ class DatabaseUtils {
             $user->bio = $row['bio'];
             $user->image = $row['image'];
             $user->email = $row['email'];
+            $user->username = $row['username'];
 
             return $user;
         }
@@ -75,5 +76,25 @@ class DatabaseUtils {
     function querySettings($username) {
         //TODO
     }
+
+    //insert new user
+    function insertNewUser($user, $password) {
+        //TODO
+        global $conn;
+        
+        echo $user->firstname;
+
+        $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, email, username, password)
+                                VALUES (:firstname, :lastname,:email, :username, :password)");
+        $stmt->bindParam(':firstname', $user->firstname);
+        $stmt->bindParam(':lastname', $user->lastname);
+        $stmt->bindParam(':email', $user->email);
+        $stmt->bindParam(':username', $user->username);
+        $stmt->bindParam(':password', $password);
+        if(!$stmt->execute()) {
+            error_log("Unable to insert new user", 0);
+        } else return true;
+    }
+
 }
 ?>
