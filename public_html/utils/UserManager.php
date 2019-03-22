@@ -21,7 +21,8 @@ class UserManager {
     static function logout_user() {
         session_start();
         unset($_SESSION["logged_in"]);
-        HTTPUtils::redirectPage("/html/homepage.html");
+        session_unset();
+        HTTPUtils::redirectPage("/php/homepage.php");
     }
 
     static function getUser($username) {
@@ -39,14 +40,12 @@ class UserManager {
     }
 
     static function addUser($firstname, $lastname, $email, $password) {
-        //TODO
         $db = UserManager::getdb();
         $user = new User();
         $user->firstname = $firstname;
         $user->lastname = $lastname;
         $user->email = $email;
         $user->username = $email;
-        echo "Adding new user";
         return $db->insertNewUser($user, $password); //return true or false if insert succeeded
     }
 }
