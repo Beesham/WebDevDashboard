@@ -12,8 +12,6 @@ if(array_key_exists('firstname', $_POST) &&
    count($_POST) == 4 ) {
     
     if(UserManager::checkIfUserExist(htmlspecialchars($_POST['email']), ENT_QUOTES)) {
-        //TODO: user exists send error
-        //TODO put forms fields in $_SESSION
         $_SESSION['firstname'] = $_POST['firstname'];
         $_SESSION['lastname'] = $_POST['lastname'];
         $_SESSION['email'] = $_POST['email'];

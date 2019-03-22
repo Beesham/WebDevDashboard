@@ -4,6 +4,7 @@ Author(s): Beesham Sarendranauth
 -->
 
 <?php
+    include_once('../utils/HTTPUtils.php');
     session_start();
 
     //repopulates the forms
@@ -11,6 +12,10 @@ Author(s): Beesham Sarendranauth
         if(array_key_exists($field, $_SESSION)) {
             echo $_SESSION[$field];//echos the value to the form
          }           
+    }
+
+    if(array_key_exists('logged_in', $_SESSION)) {
+        HTTPUtils::redirectPage('/html/mainpage.html');
     }
 ?>
 
@@ -99,13 +104,15 @@ Author(s): Beesham Sarendranauth
                 alert("That email is already in user!");
             </script>
 ZZEOF;
-    } else { error_log("no reg error", 0);}
+        unset($_SESSION['registration_error']);
+    } 
 
     if(array_key_exists('invalid_credentials', $_SESSION)) {
         echo <<<ZZEOF
             <script>alert("Invalid credentials!")</script>
 ZZEOF;
     }
+        unset($_SESSION['invalid_credentials']);
 ?> 
                 
             </div>

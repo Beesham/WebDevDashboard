@@ -12,11 +12,12 @@ function login_user() {
         && array_key_exists('password', $_POST)
         && count($_POST) == 2) {
 
-        $status = UserManager::login_user($_POST['username'], $_POST['password']);  
+        $status = UserManager::login_user(htmlspecialchars($_POST['username'], ENT_QUOTES),
+                                            htmlspecialchars($_POST['password'], ENT_QUOTES));  
         if($status) {
             $_SESSION["logged_in"] = true;
             $_SESSION['username'] = $_POST['username'];
-            UserManager::getUser($_POST['username']);
+            unset($_SESSION['invalid_credentials']);
             HTTPUtils::redirectPage("/html/mainpage.html");
         } else {
             $_SESSION["logged_in"] = false;
@@ -30,8 +31,10 @@ function login_user() {
 function login_user_registered($username, $password) {
     $status = UserManager::login_user($username, $password);  
     if($status) {
+        $_SESSION['username'] = $username;
         $_SESSION["logged_in"] = true;
-        UserManager::getUser($_POST['username']);
+        unset($_SESSION['registration_error']);
+        UserManager::getUser(htmlspecialchars($_POST['username'], ENT_QUOTES));
         HTTPUtils::redirectPage("/html/mainpage.html");
     } else {
         $_SESSION["logged_in"] = false;
