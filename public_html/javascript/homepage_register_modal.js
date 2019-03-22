@@ -1,4 +1,4 @@
-var register_modal = document.getElementById('register');
+var register = document.getElementById('register');
 window.onclick = function(event) {
     if(event.target == register) {
         register.style.display = "none";

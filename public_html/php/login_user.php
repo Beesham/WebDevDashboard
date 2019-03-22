@@ -1,5 +1,5 @@
 <?php
-//Aothoer(s): Beesham Sarendranauth
+//Author(s): Beesham Sarendranauth
 
     session_start();
     include_once("../../extras/adminConfig.php");
@@ -15,16 +15,16 @@ function login_user() {
         $status = UserManager::login_user($_POST['username'], $_POST['password']);  
         if($status) {
             $_SESSION["logged_in"] = true;
+            $_SESSION['username'] = $_POST['username'];
             UserManager::getUser($_POST['username']);
             HTTPUtils::redirectPage("/html/mainpage.html");
         } else {
             $_SESSION["logged_in"] = false;
+            $_SESSION['invalid_credentials'] = invalid;
+            HTTPUtils::redirectPage("/php/homepage.php");
         }
-    } else {
-        //TODO
-        //invalid login info
-        echo "Invalid login info";
-    }
+    } 
+    
 }
 
 function login_user_registered($username, $password) {
