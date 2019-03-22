@@ -1,10 +1,10 @@
 <?php
 //Author(s): Beesham Sarendranauth
 
-    session_start();
-    include_once("../../extras/adminConfig.php");
-    include_once("../utils/HTTPUtils.php");
-    include_once("../utils/UserManager.php"); 
+session_start();
+include_once("../../extras/adminConfig.php");
+include_once("../utils/HTTPUtils.php");
+include_once("../utils/UserManager.php"); 
 
 login_user();
 function login_user() {    
@@ -18,6 +18,11 @@ function login_user() {
             $_SESSION["logged_in"] = true;
             $_SESSION['username'] = $_POST['username'];
             unset($_SESSION['invalid_credentials']);
+
+            if(strcmp($_POST['username'], $admin_username)) {
+                $_SESSION['is_admin'] = 'true';
+            }
+
             HTTPUtils::redirectPage("/html/mainpage.html");
         } else {
             $_SESSION["logged_in"] = false;
