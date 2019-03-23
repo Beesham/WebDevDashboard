@@ -18,9 +18,10 @@
 <div class="container">
 
     <!--User greeting tile-->
-    <div class="item greeting">
+    <div  class="item greeting">
         <div id="time"></div>
         <div id="greeting"></div>
+        <div id="quote"></div>
     </div>
 
     <!--To do list tile-->
@@ -40,13 +41,22 @@
         <div id="maxTemp"></div>
     </div>
 
-    <!--Calendar-->
-    <div id="cal" class="item">
-        <p>
-            <iframe src="https://calendar.google.com/calendar/embed?src=en.canadian%23holiday%40group.v.calendar.google.com&ctz=America%2FToronto"></iframe>
-        </p>
+    <!--Game-->
+    <div id="game" class="item">
+      <div id="cities"></div>
+      <div id="country"></div>
+      <div id="game-menu">
+           <button id="game-reset-button">RESET</button>
+      </div>
     </div>
-</div>
+  
+    <!--News-->
+    <div id="news-container" class="item">
+      <h2> Todays Top 5 headlines </h2>
+      <div id=news-articles></div>
+    </div>
+
+  </div>
 </body>
 <footer id="mainPgFooter">
 
