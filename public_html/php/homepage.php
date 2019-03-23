@@ -38,9 +38,9 @@ Author(s): Beesham Sarendranauth
         <h1 id='homepage_title'>My Dashboard</h1>
         
         <div class="homepage_tab">
-            <button class="homepage_tab_links" onclick="">Home</button>
-            <button class="homepage_tab_links" onclick="">About Us</button>
-            <button class="homepage_tab_links" onclick="">Contact Us</button>
+            <button class="homepage_tab_links" onclick="location.href='/php/homepage.php'">Home</button>
+            <button class="homepage_tab_links" onclick="location.href='/html/aboutus.html'">About Us</button>
+            <button class="homepage_tab_links" onclick="location.href='/html/contact.html'">Contact Us</button>
         </div> 
         
     </header>
@@ -96,7 +96,7 @@ Author(s): Beesham Sarendranauth
                             <input type="text" id='lastname' placeholder="Lastname" name="lastname" value="<?php repopulate('lastname') ?>" required>
                             
                             <label for="email"><b>Email</b></label>
-                            <input type="text" id='email' placeholder="example@example.com" name="email" value="<?php repopulate('email') ?>" required>
+                            <input type="email" id='email' placeholder="example@example.com" name="email" value="<?php repopulate('email') ?>" required>
                             
                             <label for="password"><b>Password</b></label>
                             <input type="password" id='password' placeholder="Password" name="password" required>
@@ -112,7 +112,7 @@ Author(s): Beesham Sarendranauth
         echo <<<ZZEOF
             <script>
                 document.getElementById('signup').click();
-                alert("That email is already in user!");
+                alert("That email is already in use!");
             </script>
 ZZEOF;
         unset($_SESSION['registration_error']);

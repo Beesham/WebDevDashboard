@@ -26,7 +26,7 @@ function login_user() {
             HTTPUtils::redirectPage("/html/mainpage.html");
         } else {
             $_SESSION["logged_in"] = false;
-            $_SESSION['invalid_credentials'] = invalid;
+            $_SESSION['invalid_credentials'] = 'invalid';
             HTTPUtils::redirectPage("/php/homepage.php");
         }
     } 
