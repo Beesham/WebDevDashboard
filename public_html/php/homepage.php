@@ -5,7 +5,16 @@ Author(s): Beesham Sarendranauth
 
 <?php
     include_once('../utils/HTTPUtils.php');
+    include_once('../utils/DatabaseUtils.php');
+    include_once('../../extras/databaseConfig.php');
+
     session_start();
+
+    if($db_init) {
+        $db = new DatabaseUtils();
+        $db->connectToDb();
+        $db->initDB();
+    }
 
     //repopulates the forms
     function repopulate($field) {
