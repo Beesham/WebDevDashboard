@@ -1,17 +1,41 @@
 <!Doctype HTML5>
 <!--
-Author: Beesham Sarendranauth
+Author(s): Beesham Sarendranauth
 -->
+
+<?php
+    include_once('../utils/HTTPUtils.php');
+    include_once('../utils/DatabaseUtils.php');
+    include_once('../../extras/databaseConfig.php');
+
+    session_start();
+
+    if($db_init) {
+        $db = new DatabaseUtils();
+        $db->connectToDb();
+        $db->initDB();
+    }
+
+    //repopulates the forms
+    function repopulate($field) {
+        if(array_key_exists($field, $_SESSION)) {
+            echo $_SESSION[$field];//echos the value to the form
+         }           
+    }
+
+    if(array_key_exists('logged_in', $_SESSION)) {
+        HTTPUtils::redirectPage('/html/mainpage.html');
+    }
+?>
 
 <html>
     <head>
         <title>Dashboard</title>
         <link rel="stylesheet" href="/css/homepage.css" type="text/css">
-
     </head>
 
     <header>
-        <h1 id='homepage_title'>My Frontpage Dashboard</h1>
+        <h1 id='homepage_title'>My Dashboard</h1>
         
         <div class="homepage_tab">
             <button class="homepage_tab_links" onclick="">Home</button>
@@ -41,6 +65,7 @@ Author: Beesham Sarendranauth
             <script src="/javascript/homepage.js"></script>
                
             <div id='homepage_login'>
+                <!--User login-->
                 <form action="/php/login_user.php" method="POST">
                     <div class="imgcontainer">
                         <img src="/images/avatar.svg" alt="Avatar" class="avatar">
@@ -48,37 +73,56 @@ Author: Beesham Sarendranauth
 
                     <div class="login_container">
                         <label for="username"><b>Username:</b></label>
-                        <input type="text" placeholder="Enter Username" name="username" required>
+                        <input type="text" placeholder="Enter Username" name="username" required value="<?php repopulate('username') ?>" >
                         <label for="password"><b>Password:</b></label>
                         <input type="password" placeholder="Enter Password" name="password" required><br>
                         <button type="submit">Login</button>
-                        <a href="#" onclick="document.getElementById('register').style.display='block'" style="width=auto;">Sign up!</a>
+                        <a href="#" id='signup' onclick="document.getElementById('register').style.display='block'" style="width=auto">Sign up!</a>
                     </div>
                 </form>    
-                
+             
+                 <!--User registration-->
                 <div id="register" class="register_modal">
-                   <!--TODO--> 
+                   <!--TODO-->
                     <form class="register_content animate" action="/php/register_user.php" method="POST">
                         <span onclick="document.getElementById('register').style.display='none'" class="close" title="Close">&times;</span>
                         <div class="register_container">
-                            <label for="first_name"><b>Firstname</b></label>
-                            <input type="text" placeholder="Firstname" name="firstname" required>
+                            <label for="firstname"><b>Firstname</b></label>
+                            <input type="text" id='firstname' placeholder="Firstname" name="firstname" value="<?php repopulate('firstname') ?>" required>
                             
-                            <label for="last_name"><b>Lastname</b></label>
-                            <input type="text" placeholder="Lastname" name="lastname" required>
+                            <label for="lastname"><b>Lastname</b></label>
+                            <input type="text" id='lastname' placeholder="Lastname" name="lastname" value="<?php repopulate('lastname') ?>" required>
                             
                             <label for="email"><b>Email</b></label>
-                            <input type="text" placeholder="example@example.com" name="email" required>
+                            <input type="text" id='email' placeholder="example@example.com" name="email" value="<?php repopulate('email') ?>" required>
                             
                             <label for="password"><b>Password</b></label>
-                            <input type="password" placeholder="Password" name="password" required>
+                            <input type="password" id='password' placeholder="Password" name="password" required>
                             
-                            <button type="submit">Submit</button>
+                            <button type="submit">Register</button>
                         </div>
                     </form>
                 </div>
                 <script src="/javascript/homepage_register_modal.js"></script>
 
+<?php
+    if(array_key_exists('registration_error', $_SESSION)) {
+        echo <<<ZZEOF
+            <script>
+                document.getElementById('signup').click();
+                alert("That email is already in user!");
+            </script>
+ZZEOF;
+        unset($_SESSION['registration_error']);
+    } 
+
+    if(array_key_exists('invalid_credentials', $_SESSION)) {
+        echo <<<ZZEOF
+            <script>alert("Invalid credentials!")</script>
+ZZEOF;
+    }
+        unset($_SESSION['invalid_credentials']);
+?> 
                 
             </div>
         </div>
