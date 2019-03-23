@@ -16,7 +16,7 @@ if(array_key_exists('firstname', $_POST) &&
         $_SESSION['lastname'] = $_POST['lastname'];
         $_SESSION['email'] = $_POST['email'];
         $_SESSION['registration_error'] = failed;     
-        
+                
         HTTPUtils::redirectPage("/php/homepage.php");
     } else {
         $status = UserManager::addUser(

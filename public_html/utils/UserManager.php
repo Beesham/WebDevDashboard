@@ -27,7 +27,7 @@ class UserManager {
 
     static function getUser($username) {
         $db = UserManager::getdb();
-        $user = $db->queryUser($username);
+        $user = $db->queryUsers($username);
         return $user;
     }
     

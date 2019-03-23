@@ -29,14 +29,13 @@ class DatabaseUtils {
 
         if(count($row) > 0) {
             if(strcmp($password, $row['password']) == 0) {
-                error_log("username from db: ".$row['password'] ,0);
                 return true;
             } else return false;
         }
     }
     
     //Queries for user data
-    function queryUser($username) {
+    function queryForUser($username) {
         global $conn;
         $stmt = $conn->prepare("Select u.username, u.firstname, u.lastname, u.email, i.bio, i.image
                                     FROM users u, user_info i
@@ -59,7 +58,28 @@ class DatabaseUtils {
             return $user;
         }
     }
-
+    
+    //queries the Users table for basic info, not password
+    function queryUsers($username) {
+        global $conn;
+        $stmt = $conn->prepare("Select username, firstname, lastname, email
+                                    FROM users
+                                    WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();       
+        $row = $stmt->fetch();
+       
+        //Need to check of row count is > 0. This does not 
+        if(count($row) > 0) {
+            $user = new User();
+            $user->firstname = $row['firstname'];
+            $user->lastname = $row['lastname'];
+            $user->email = $row['email'];
+            $user->username = $row['username'];
+            return $user;
+        }
+    }
+    
     //queries for user todo list. Parses the string into an array
     function queryTodo($username) {
         //TODO
