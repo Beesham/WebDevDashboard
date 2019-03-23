@@ -83,10 +83,12 @@ Author(s): Beesham Sarendranauth
              
                  <!--User registration-->
                 <div id="register" class="register_modal">
-                   <!--TODO-->
                     <form class="register_content animate" action="/php/register_user.php" method="POST">
                         <span onclick="document.getElementById('register').style.display='none'" class="close" title="Close">&times;</span>
                         <div class="register_container">
+                            <h1>Sign Up</h1>
+                            <p>Please fill this form to register.</p>
+                            <hr>
                             <label for="firstname"><b>Firstname</b></label>
                             <input type="text" id='firstname' placeholder="Firstname" name="firstname" value="<?php repopulate('firstname') ?>" required>
                             

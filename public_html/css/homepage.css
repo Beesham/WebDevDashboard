@@ -47,6 +47,7 @@ input[type=text], input[type=password] {
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    background: #f1f1f1;
 }
 
 .login_container button {
@@ -116,11 +117,18 @@ img {
     z-index: 1;
     top: 0;
     left: 0;
-    width: 50%;
-    height: 50%;
+    width: 100%;
+    height: 100%;
     overflow: auto;
-    background-color: white;
-    padding-top: 60px;
+    background-color: #474e5d;
+    padding-top: 50px;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
 }
 
 .register_container {
@@ -130,7 +138,7 @@ img {
 }
 
 .register_content {
-    background-color: white;
+    background-color: #fefefe;
     margin: 5% auto 15% auto;
     border: 1px solid #888;
     width: 80%;
@@ -138,10 +146,10 @@ img {
 
 .close {
     position: absolute;
-    right: 25px;
-    top: 0;
-    color: black;
-    font-size: 35px;
+    right: 35px;
+    top: 15px;
+    color: #f1f1f1;
+    font-size: 40px;
     font-weight: bold;
 }
 
