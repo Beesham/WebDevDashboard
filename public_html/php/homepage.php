@@ -24,7 +24,7 @@ Author(s): Beesham Sarendranauth
     }
 
     if(array_key_exists('logged_in', $_SESSION)) {
-        HTTPUtils::redirectPage('/html/mainpage.html');
+        if($_SESSION['logged_in'] == 'true') HTTPUtils::redirectPage('/html/mainpage.html');
     }
 ?>
 

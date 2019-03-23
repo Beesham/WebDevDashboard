@@ -14,19 +14,20 @@ function login_user() {
 
         $status = UserManager::login_user(htmlspecialchars($_POST['username'], ENT_QUOTES),
                                             htmlspecialchars($_POST['password'], ENT_QUOTES));  
+
         if($status) {
-            $_SESSION["logged_in"] = true;
+            $_SESSION["logged_in"] = 'true';
             $_SESSION['username'] = $_POST['username'];
             unset($_SESSION['invalid_credentials']);
 
             if(strcmp($_POST['username'], $admin_username)) {
                 $_SESSION['is_admin'] = 'true';
             }
-
             HTTPUtils::redirectPage("/html/mainpage.html");
         } else {
             $_SESSION["logged_in"] = false;
             $_SESSION['invalid_credentials'] = 'invalid';
+            error_log("login_user: User existance status: not exists", 0);
             HTTPUtils::redirectPage("/php/homepage.php");
         }
     } 

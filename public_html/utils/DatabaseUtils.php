@@ -30,7 +30,9 @@ class DatabaseUtils {
         if(count($row) > 0) {
             if(strcmp($password, $row['password']) == 0) {
                 return true;
-            } else return false;
+            } else {
+                return false;
+            }
         }
     }
     
