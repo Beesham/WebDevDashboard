@@ -18,7 +18,7 @@ if (isset($_POST['submit'])){
 
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" type="text/css" href="contact.css">
+<link rel="stylesheet" type="text/css" href="/css/contact.css">
 <head>
 <title> Contact us</title>
 <h1> Contact Us </h1>
