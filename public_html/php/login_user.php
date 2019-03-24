@@ -19,6 +19,8 @@ function login_user() {
             $_SESSION["logged_in"] = 'true';
             $_SESSION['username'] = $_POST['username'];
             unset($_SESSION['invalid_credentials']);
+            
+            global $admin_username;
 
             if(strcmp($_POST['username'], $admin_username)) {
                 $_SESSION['is_admin'] = 'true';
