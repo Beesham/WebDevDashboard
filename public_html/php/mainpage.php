@@ -2,9 +2,8 @@
     include_once('../utils/HTTPUtils.php');
 
     session_start();
-
-    if(array_key_exists('logged_in', $_SESSION)) {
-        if($_SESSION['logged_in'] != 'true') HTTPUtils::redirectPage("/php/homepage.php");
+    if(!array_key_exists('logged_in', $_SESSION)) {
+        HTTPUtils::redirectPage('/php/homepage.php');
     }
 ?>
 

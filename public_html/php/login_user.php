@@ -16,7 +16,7 @@ function login_user() {
                                             htmlspecialchars($_POST['password'], ENT_QUOTES));  
 
         if($status) {
-            $_SESSION["logged_in"] = 'true';
+            $_SESSION['logged_in'] = 'true';
             $_SESSION['username'] = $_POST['username'];
             unset($_SESSION['invalid_credentials']);
             
@@ -25,11 +25,10 @@ function login_user() {
             if(strcmp($_POST['username'], $admin_username)) {
                 $_SESSION['is_admin'] = 'true';
             }
-            HTTPUtils::redirectPage("/html/mainpage.html");
+            HTTPUtils::redirectPage("/php/mainpage.php");
         } else {
-            $_SESSION["logged_in"] = false;
+            $_SESSION['logged_in'] = false;
             $_SESSION['invalid_credentials'] = 'invalid';
-            error_log("login_user: User existance status: not exists", 0);
             HTTPUtils::redirectPage("/php/homepage.php");
         }
     } 
@@ -40,12 +39,12 @@ function login_user_registered($username, $password) {
     $status = UserManager::login_user($username, $password);  
     if($status) {
         $_SESSION['username'] = $username;
-        $_SESSION["logged_in"] = true;
+        $_SESSION['logged_in'] = true;
         unset($_SESSION['registration_error']);
         UserManager::getUser(htmlspecialchars($_POST['username'], ENT_QUOTES));
-        HTTPUtils::redirectPage("/html/mainpage.html");
+        HTTPUtils::redirectPage("/php/mainpage.php");
     } else {
-        $_SESSION["logged_in"] = false;
+        $_SESSION['logged_in'] = false;
     }
 }
 
