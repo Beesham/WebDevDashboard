@@ -203,6 +203,11 @@ function updateGreeting(){
 
     document.getElementById("time").innerHTML = time + " " + am_pm;
 
+    userName = "<?php if(array_key_exists('username', $_SESSION)) {echo  $_SESSION["username"];} ?>"
+
+document.getElementById("greeting").innerHTML = greeting + ", " +
+    userName;
+
     document.getElementById("greeting").innerHTML = greeting + ", " +
         userName;
 
