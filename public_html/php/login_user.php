@@ -23,7 +23,7 @@ function login_user() {
             if(strcmp($_POST['username'], $admin_username)) {
                 $_SESSION['is_admin'] = 'true';
             }
-            HTTPUtils::redirectPage("/html/mainpage.html");
+            HTTPUtils::redirectPage("/php/mainpage.php");
         } else {
             $_SESSION["logged_in"] = false;
             $_SESSION['invalid_credentials'] = 'invalid';
@@ -41,7 +41,7 @@ function login_user_registered($username, $password) {
         $_SESSION["logged_in"] = true;
         unset($_SESSION['registration_error']);
         UserManager::getUser(htmlspecialchars($_POST['username'], ENT_QUOTES));
-        HTTPUtils::redirectPage("/html/mainpage.html");
+        HTTPUtils::redirectPage("/php/mainpage.php");
     } else {
         $_SESSION["logged_in"] = false;
     }
