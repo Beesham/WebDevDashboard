@@ -8,10 +8,15 @@ if (isset($_POST['submit'])){
           $to="at2187338@gmail.com";
           $headers="reply-to:$email";
           $subject="Contact From ";
-          $body= "Firstname:$firstname\n Lastname:$lastname\n Email:$email\n UserID:$userid \n Message: $message\n File:$file";
+          $body= "Firstname:$firstname\n Lastname:$lastname\n Email:$email\n UserID:$userid \n Message: $message\n";
 
 
- mail($to,$subject,$body,$headers);
+ if (mail($to,$subject,$body,$headers)){
+   header( "Location: success.html" );
+ }
+ else {
+   header( "Location: error.html" );
+ }
 
 }
 ?>
@@ -22,9 +27,21 @@ if (isset($_POST['submit'])){
 <head>
 <title> Contact us</title>
 <h1> Contact Us </h1>
+<script src="js/tinymce/tinymce.min.js"></script>
+<script>
+tinymce.init({selector: 'textarea','input'});
+</script>
+
 </head>
 <body>
 
+  <div class="menu">
+  <a href="homepage.php">Home</a>
+  <a href="mainpage.php"> Main</a>
+  <a class="active" href="contact.php">Contact</a>
+  </div>
+
+  <br>
   <div class="contact_box">
   <form id="contact" action="" method="post">
     <h4> Send Us A Message </h4>
@@ -47,11 +64,6 @@ if (isset($_POST['submit'])){
     <fieldset>
       <textarea placeholder="Type your Message Here...." tabindex="6" name="message"required></textarea>
     </fieldset>
-
-<fieldset>
-       <input id ="drop"tabindex="7" type="file" name="file" multiple >
-  </fieldset>
-
 
     <fieldset>
       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
