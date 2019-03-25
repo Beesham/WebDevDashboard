@@ -31,6 +31,14 @@
     <div class="item greeting">
         <div id="time"></div>
         <div id="greeting"></div>
+        <div id="userName">
+            <?php
+            session_start();
+            if(array_key_exists('username', $_SESSION)) {
+                echo  $_SESSION['username'];
+            }
+            ?>
+        </div>
         <div id="quote"></div>
     </div>
 
