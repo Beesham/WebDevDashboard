@@ -9,12 +9,12 @@ header {
 }
 
 body {
-    margin: 0 20px 0 20px;
+    margin: 0 0 0 0;
 }
 
 #homepage_title { 
     align-self: flex-start;
-    padding-left: 8px;
+    padding-left: 10px;
     font-family: verdana; 
 }
 
