@@ -83,6 +83,10 @@ class DatabaseUtils {
         }
     }
     
+    function queryAllUsers() {
+        //TODO
+    }
+
     //queries for user todo list. Parses the string into an array
     function queryTodo($username) {
         //TODO
@@ -113,6 +117,19 @@ class DatabaseUtils {
             $user_settings->bio = $row['news']; 
             return $user_settings; 
         }
+    }
+
+    //updates user password
+    function updatePassword($username) {
+        //TODO
+    }
+
+    function updateUserSettings($username) {
+        //TODO
+    }
+
+    function deleteUser($username) {
+        //TODO
     }
 
     //insert new user
