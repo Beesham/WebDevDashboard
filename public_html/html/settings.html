@@ -1,0 +1,109 @@
+<!DOCTYPE HTML5>
+<title>
+Settings
+</title>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="/Users/WebProject/css/settings.css">
+	<script src="/Users/Kuchiyose/Desktop/Project/public_html/javascript/settings.js" type="application/javascript"></script>
+</head>
+
+<header class="header">
+    <h1 class="logo"><a href="#">MY DASHBOARD-SETTINGS</a></h1>
+	<form action="/Users/Kuchiyose/Desktop/Project/public_html/html/mainpage.html">
+    <input type="submit" value="Mainpage"/>
+	</form>
+	<form action="/Users/Kuchiyose/Desktop/Project/public_html/html/homepage.html">
+    <input type="submit" value="Logout and return to Homepage"/>
+	</form>
+</header>
+
+<body>
+<h1>Settings</h1>
+
+<div id='changePassword'>
+                <form action="/Users/WebProject/php/changePassword.php" method="POST">
+                    <div class="changePassword">
+                        <label for="username"><b>Reset Password:</b></label>
+                        <input type="text" placeholder="Enter Original Password" name="orgpassword" required>
+                        <label for="password"><b>Confirm New Password:</b></label>
+                        <input type="password" placeholder="Enter New Password" name="newpassword" required><br>
+                        <button type="submit">Change Password</button>
+                    </div>
+                </form>    
+				
+<div>
+<table id="table1" border="1" onclick="tileUpdate(event);" align="center">
+    <thead>
+      <tr>
+        <th>Tiles
+    </thead>
+    <tbody>
+       <tr> 
+	   <th>Weather</th>
+           <td>
+               <form name="f1" action="#" >
+                <input id="weather" type="submit" name="on" value="ON">
+               </form>
+       <tr> 
+	   <th>Game</th>
+           <td>
+               <form name="f2" action="#" >
+                <input id="game" type="submit" name="on" value="ON">
+               </form>
+       <tr> 
+	   <th>To Do List</th>
+           <td>
+               <form name="f3" action="#" >
+                <input id="todolist" type="submit" name="on" value="ON">
+               </form>
+			   
+		<tr> 
+		<th>User Greeting</th>
+           <td>
+               <form name="f4" action="#" >
+                <input id="usergreeting" type="submit" name="on" value="ON">
+               </form>
+       <tr> 	   
+	    <tr> 
+	   <th>News</th>
+           <td>
+               <form name="f5" action="#" >
+                <input id="news" type="submit" name="on" value="ON">
+               </form>
+       <tr> 
+</div>
+
+   </tbody>
+   
+</table>
+	<button id="saveSettings">Save Tile Settings</button>
+	
+	
+<main>
+<h2>ADMIN CONTROLS</h2>
+<div class="changeuserpassword">
+	<br>
+	<form action="username">Username<input type="text" name="username" id="username" maxlength="10"> 
+	<label for="username"></label>
+	<form action="changepassword">Change User Password
+	<input type="password" name="changepassword" id="changepassword" maxlength="10"> 
+	<label for="password"></label> 
+	<input type="submit" value="Change"> 
+	</form>
+</div>
+
+<div class="deleteuser">
+	<form action="deleteuser">Delete User<input type="text" name="deleteuser" id="deleteuser" maxlength="10"> 
+	<label for="deleteuser"></label>
+	<input type="submit" value="Delete"> 
+	</form>
+</div>
+
+<div class="displayUsers">
+<p>Number of Users registered: <p>
+</div>
+
+</main>
+
+</body>
