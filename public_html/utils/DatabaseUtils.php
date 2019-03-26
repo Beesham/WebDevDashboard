@@ -120,8 +120,25 @@ class DatabaseUtils {
     }
 
     //updates user password
-    function updatePassword($username) {
-        //TODO
+    function updatePassword($username, $user_settings) {
+        global $conn;
+         
+        $stmt = $conn->prepare("UPDATE user_settings
+                                SET calendar = :calendar,
+                                    todo = :todo,
+                                    weather = :weather,
+                                    bio = :bio,
+                                    news = :news 
+                                WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':calendar', $user_settings->calendar);
+        $stmt->bindParam(':todo', $user_settings->todo);
+        $stmt->bindParam(':weather', $user_settings->weather);
+        $stmt->bindParam(':bio', $user_settings->bio);
+        $stmt->bindParam(':news', $user_settings->news);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
     }
 
     function updateUserSettings($username) {
