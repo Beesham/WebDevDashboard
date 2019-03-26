@@ -113,12 +113,12 @@ if(array_key_exists('is_admin', $_SESSION) && ($_SESSION['is_admin'] == 'true'))
     <!-- Admin control to change any registered users password -->
     <div class="changeuserpassword">
         <br>
-        <form action="username">Username<input type="text" name="username" id="username" maxlength="10"> 
-        <label for="username"></label>
-        <form action="changepassword">Change User Password
-        <input type="password" name="changepassword" id="changepassword" maxlength="10"> 
-        <label for="password"></label> 
-        <input type="submit" value="Change"> 
+        <form action="/php/change_password.php" method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" maxlength="100"> 
+            <label for="password">Change User Password</label>
+            <input type="password" name="password" id="password" maxlength="100"> 
+            <input type="submit" value="Change"> 
         </form>
     </div>
 
