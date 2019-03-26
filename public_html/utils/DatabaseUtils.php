@@ -120,7 +120,20 @@ class DatabaseUtils {
     }
 
     //updates user password
-    function updatePassword($username, $user_settings) {
+    function updatePassword($username, $password) {
+        global $conn;
+         
+        $stmt = $conn->prepare("UPDATE users
+                                SET password = :password
+                                WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+    }
+
+    function updateUserSettings($username) {
         global $conn;
          
         $stmt = $conn->prepare("UPDATE user_settings
@@ -141,12 +154,7 @@ class DatabaseUtils {
         } else return true;
     }
 
-    function updateUserSettings($username) {
-        //TODO
-    }
-
     function deleteUser($username) {
-        //TODO
         global $conn;
         
         $stmt = $conn->prepare("DELETE from users 
