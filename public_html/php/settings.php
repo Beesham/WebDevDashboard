@@ -104,33 +104,39 @@ Settings
 </ul>
 	
 <!-- Admin Panel -->
-<main>
-<h2>ADMIN CONTROLS</h2>
+<?php
+if(array_key_exists('is_admin', $_SESSION) && ($_SESSION['is_admin'] == 'true')) {
+    echo <<<ZZEOF
+    <main>
+    <h2>ADMIN CONTROLS</h2>
 
-<!-- Admin control to change any registered users password -->
-<div class="changeuserpassword">
-	<br>
-	<form action="username">Username<input type="text" name="username" id="username" maxlength="10"> 
-	<label for="username"></label>
-	<form action="changepassword">Change User Password
-	<input type="password" name="changepassword" id="changepassword" maxlength="10"> 
-	<label for="password"></label> 
-	<input type="submit" value="Change"> 
-	</form>
-</div>
+    <!-- Admin control to change any registered users password -->
+    <div class="changeuserpassword">
+        <br>
+        <form action="username">Username<input type="text" name="username" id="username" maxlength="10"> 
+        <label for="username"></label>
+        <form action="changepassword">Change User Password
+        <input type="password" name="changepassword" id="changepassword" maxlength="10"> 
+        <label for="password"></label> 
+        <input type="submit" value="Change"> 
+        </form>
+    </div>
 
-<!-- Admin control to delete a registered user -->
-<div class="deleteuser">
-	<form action="deleteuser">Delete User<input type="text" name="deleteuser" id="deleteuser" maxlength="10"> 
-	<label for="deleteuser"></label>
-	<input type="submit" value="Delete"> 
-	</form>
-</div>
+    <!-- Admin control to delete a registered user -->
+    <div class="deleteuser">
+        <form action="deleteuser">Delete User<input type="text" name="deleteuser" id="deleteuser" maxlength="10"> 
+        <label for="deleteuser"></label>
+        <input type="submit" value="Delete"> 
+        </form>
+    </div>
 
-<!-- Display all registered users -->
-<div class="displayUsers">
-<p>Number of Users registered: <p>
-</div>
-</main>
+    <!-- Display all registered users -->
+    <div class="displayUsers">
+    <p>Number of Users registered: <p>
+    </div>
+    </main>
+ZZEOF;
+}
+?>
 
 </body>
