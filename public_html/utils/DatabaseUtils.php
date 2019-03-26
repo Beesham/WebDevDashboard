@@ -147,6 +147,15 @@ class DatabaseUtils {
 
     function deleteUser($username) {
         //TODO
+        global $conn;
+        
+        $stmt = $conn->prepare("DELETE from users 
+                                WHERE  username = :username");
+        $stmt->bindParam(':username', $user->username);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+
     }
 
     //insert new user
@@ -203,16 +212,17 @@ class DatabaseUtils {
                         bio boolean DEFAULT 1, 
                         news boolean DEFAULT 1, 
                         contact_list boolean DEFAULT 1, 
-                        FOREIGN KEY (username) REFERENCES users(username));");
+                        FOREIGN KEY (username) REFERENCES users(username)
+                        ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_todo (username varchar(50) not null PRIMARY KEY,
                         items varchar(1024) not null,
-                        FOREIGN KEY (username) REFERENCES users(username));");
+                        FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_contactList (username varchar(50) not null PRIMARY KEY,
                         contactList varchar(1024) not null,
-                        FOREIGN KEY (username) REFERENCES users(username));");
+                        FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_info (username varchar(50) not null PRIMARY KEY,
                         bio varchar(500) not null, image varchar(100) not null,
-                        FOREIGN KEY (username) REFERENCES users(username));");
+                        FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE);");
         }
     }
 
