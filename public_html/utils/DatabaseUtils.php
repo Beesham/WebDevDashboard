@@ -84,7 +84,23 @@ class DatabaseUtils {
     }
     
     function queryAllUsers() {
-        //TODO
+        global $conn;
+        $stmt = $conn->prepare("Select username, firstname, lastname, email
+                                    FROM users");
+        $stmt->execute();       
+        
+        $userList = array();
+              
+        //Need to check of row count is > 0. This does not 
+        while($row = $stmt->fetch()) {
+            $user = new User();
+            $user->firstname = $row['firstname'];
+            $user->lastname = $row['lastname'];
+            $user->email = $row['email'];
+            $user->username = $row['username'];
+            $userList[] = $user;
+        }
+        return $userList;
     }
 
     //queries for user todo list. Parses the string into an array
