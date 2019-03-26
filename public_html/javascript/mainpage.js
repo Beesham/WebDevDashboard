@@ -156,13 +156,32 @@ function newToDoListItem() {
     var item = document.getElementById("input").value;
 
     if (item) {
+
         var ul = document.getElementById("list");
         var li = document.createElement("li");
         li.appendChild(document.createTextNode("  + " + item));
         ul.appendChild(li);
         document.getElementById("input").value = "";
         li.onclick = removeItem;
+
+        postItem(item);
     }
+}
+
+
+function postItem(item){
+    console.log('in post item method......');
+
+    $.ajax({
+        url:"../php/post_list_item.php",
+        method: "post",
+        data: item,
+        success: function (res){
+            console.log(res);
+        }
+    })
+
+    console.log('finishes');
 }
 
 function removeItem(e) {

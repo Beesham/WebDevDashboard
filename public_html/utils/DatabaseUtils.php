@@ -87,6 +87,19 @@ class DatabaseUtils {
         //TODO
     }
 
+    function insertToDoListItem($username, $item){
+        global $conn;
+
+        $stmt = $conn->prepare("INSERT INTO user_todo (username, items)
+                                VALUES (:username, :items)");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':items', $item);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+
+    }
+
     //queries for user contact list. Parses the string into an array
     function queryContactList($username) {
         //TODO
