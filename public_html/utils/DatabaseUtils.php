@@ -1,6 +1,7 @@
 <?php
 //Author(s): Beesham Sarendranauth
 include_once 'User.php';
+include_once ('User_Settings.php');
 include_once '../../extras/databaseConfig.php';
 include_once ('../../extras/adminConfig.php');
 
@@ -94,7 +95,24 @@ class DatabaseUtils {
     
     //query for tile visibility: true/false
     function querySettings($username) {
-        //TODO
+        global $conn;
+        
+        $stmt = $conn->prepare("SELECT calendar, todo, weather, bio, news 
+                                FROM user_settings
+                                WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+        if(count($row) > 0) {
+            $user_settings = new User_Settings();
+            $user_settings->calendar = $row['calendar']; 
+            $user_settings->news = $row['todo']; 
+            $user_settings->todo = $row['weather']; 
+            $user_settings->weather = $row['bio']; 
+            $user_settings->bio = $row['news']; 
+            return $user_settings; 
+        }
     }
 
     //insert new user
