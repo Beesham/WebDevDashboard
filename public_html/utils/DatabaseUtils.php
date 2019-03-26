@@ -1,6 +1,7 @@
 <?php
 //Author(s): Beesham Sarendranauth
 include_once 'User.php';
+include_once ('User_Settings.php');
 include_once '../../extras/databaseConfig.php';
 include_once ('../../extras/adminConfig.php');
 
@@ -82,6 +83,26 @@ class DatabaseUtils {
         }
     }
     
+    function queryAllUsers() {
+        global $conn;
+        $stmt = $conn->prepare("Select username, firstname, lastname, email
+                                    FROM users");
+        $stmt->execute();       
+        
+        $userList = array();
+              
+        //Need to check of row count is > 0. This does not 
+        while($row = $stmt->fetch()) {
+            $user = new User();
+            $user->firstname = $row['firstname'];
+            $user->lastname = $row['lastname'];
+            $user->email = $row['email'];
+            $user->username = $row['username'];
+            $userList[] = $user;
+        }
+        return $userList;
+    }
+
     //queries for user todo list. Parses the string into an array
     function queryTodo($username) {
         //TODO
@@ -94,7 +115,71 @@ class DatabaseUtils {
     
     //query for tile visibility: true/false
     function querySettings($username) {
-        //TODO
+        global $conn;
+        
+        $stmt = $conn->prepare("SELECT calendar, todo, weather, bio, news 
+                                FROM user_settings
+                                WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+        if(count($row) > 0) {
+            $user_settings = new User_Settings();
+            $user_settings->calendar = $row['calendar']; 
+            $user_settings->news = $row['todo']; 
+            $user_settings->todo = $row['weather']; 
+            $user_settings->weather = $row['bio']; 
+            $user_settings->bio = $row['news']; 
+            return $user_settings; 
+        }
+    }
+
+    //updates user password
+    function updatePassword($username, $password) {
+        global $conn;
+         
+        $stmt = $conn->prepare("UPDATE users
+                                SET password = :password
+                                WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+    }
+
+    function updateUserSettings($username) {
+        global $conn;
+         
+        $stmt = $conn->prepare("UPDATE user_settings
+                                SET calendar = :calendar,
+                                    todo = :todo,
+                                    weather = :weather,
+                                    bio = :bio,
+                                    news = :news 
+                                WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':calendar', $user_settings->calendar);
+        $stmt->bindParam(':todo', $user_settings->todo);
+        $stmt->bindParam(':weather', $user_settings->weather);
+        $stmt->bindParam(':bio', $user_settings->bio);
+        $stmt->bindParam(':news', $user_settings->news);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+    }
+
+    function deleteUser($username) {
+        global $conn;
+        
+        $stmt = $conn->prepare("DELETE from users 
+                                WHERE  username = :username");
+        $stmt->bindParam(':username', $user->username);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+
     }
 
     //insert new user
@@ -108,7 +193,13 @@ class DatabaseUtils {
         $stmt->bindParam(':email', $user->email);
         $stmt->bindParam(':username', $user->username);
         $stmt->bindParam(':password', $password);
-        if(!$stmt->execute()) {
+
+        $stmt2 = $conn->prepare("INSERT INTO user_settings (username, bio, calendar, contact_list, news, todo, weather)
+                                VALUES (:username, 1, 1, 1, 1, 1, 1)");
+
+        $stmt2->bindParam(':username', $user->username);
+
+        if(!$stmt->execute() || !$stmt2->execute()) {
             return false;
         } else return true;
     }
@@ -145,16 +236,17 @@ class DatabaseUtils {
                         bio boolean DEFAULT 1, 
                         news boolean DEFAULT 1, 
                         contact_list boolean DEFAULT 1, 
-                        FOREIGN KEY (username) REFERENCES users(username));");
+                        FOREIGN KEY (username) REFERENCES users(username)
+                        ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_todo (username varchar(50) not null PRIMARY KEY,
                         items varchar(1024) not null,
-                        FOREIGN KEY (username) REFERENCES users(username));");
+                        FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_contactList (username varchar(50) not null PRIMARY KEY,
                         contactList varchar(1024) not null,
-                        FOREIGN KEY (username) REFERENCES users(username));");
+                        FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_info (username varchar(50) not null PRIMARY KEY,
                         bio varchar(500) not null, image varchar(100) not null,
-                        FOREIGN KEY (username) REFERENCES users(username));");
+                        FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE);");
         }
     }
 
