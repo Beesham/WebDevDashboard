@@ -160,7 +160,13 @@ class DatabaseUtils {
         $stmt->bindParam(':email', $user->email);
         $stmt->bindParam(':username', $user->username);
         $stmt->bindParam(':password', $password);
-        if(!$stmt->execute()) {
+
+        $stmt2 = $conn->prepare("INSERT INTO user_settings (username, bio, calendar, contact_list, news, todo, weather)
+                                VALUES (:username, 1, 1, 1, 1, 1, 1)");
+
+        $stmt2->bindParam(':username', $user->username);
+
+        if(!$stmt->execute() || !$stmt2->execute()) {
             return false;
         } else return true;
     }
