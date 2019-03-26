@@ -117,7 +117,7 @@ class DatabaseUtils {
     function querySettings($username) {
         global $conn;
         
-        $stmt = $conn->prepare("SELECT calendar, todo, weather, bio, news 
+        $stmt = $conn->prepare("SELECT calendar, todo, weather, bio, news, game
                                 FROM user_settings
                                 WHERE username = :username");
         $stmt->bindParam(':username', $username);
@@ -131,6 +131,7 @@ class DatabaseUtils {
             $user_settings->todo = $row['weather']; 
             $user_settings->weather = $row['bio']; 
             $user_settings->bio = $row['news']; 
+            $user_settings->game = $row['game']; 
             return $user_settings; 
         }
     }
@@ -157,7 +158,8 @@ class DatabaseUtils {
                                     todo = :todo,
                                     weather = :weather,
                                     bio = :bio,
-                                    news = :news 
+                                    news = :news,
+                                    game = :game
                                 WHERE username = :username");
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':calendar', $user_settings->calendar);
@@ -165,6 +167,7 @@ class DatabaseUtils {
         $stmt->bindParam(':weather', $user_settings->weather);
         $stmt->bindParam(':bio', $user_settings->bio);
         $stmt->bindParam(':news', $user_settings->news);
+        $stmt->bindParam(':game', $user_settings->game);
         if(!$stmt->execute()) {
             return false;
         } else return true;
@@ -194,8 +197,8 @@ class DatabaseUtils {
         $stmt->bindParam(':username', $user->username);
         $stmt->bindParam(':password', $password);
 
-        $stmt2 = $conn->prepare("INSERT INTO user_settings (username, bio, calendar, contact_list, news, todo, weather)
-                                VALUES (:username, 1, 1, 1, 1, 1, 1)");
+        $stmt2 = $conn->prepare("INSERT INTO user_settings (username, bio, calendar, contact_list, news, todo, weather, game)
+                                VALUES (:username, 1, 1, 1, 1, 1, 1, 1)");
 
         $stmt2->bindParam(':username', $user->username);
 
@@ -235,7 +238,8 @@ class DatabaseUtils {
                         weather boolean DEFAULT 1, 
                         bio boolean DEFAULT 1, 
                         news boolean DEFAULT 1, 
-                        contact_list boolean DEFAULT 1, 
+                        contact_list boolean DEFAULT 1,
+                        game boolean DEFAULT 1, 
                         FOREIGN KEY (username) REFERENCES users(username)
                         ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_todo (username varchar(50) not null PRIMARY KEY,
@@ -284,11 +288,11 @@ class DatabaseUtils {
             INSERT INTO users (firstname, lastname, username, email, password) VALUES ('Juliet' , 'Woodstock', 'user4@gmail.com', 'user4@gmail.com', 'password4');
             INSERT INTO users (firstname, lastname, username, email, password) VALUES ('Kelly' , 'Ryan', 'user5@gmail.com', 'user5@gmail.com', 'password5');
             
-            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`) VALUES ('user1@gmail.com', 0, 1, 1, 1, 0, 0);
-            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`) VALUES ('user2@gmail.com', 0, 1, 0, 1, 1, 0);
-            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`) VALUES ('user3@gmail.com', 0, 0, 1, 0, 0, 0);
-            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`) VALUES ('user4@gmail.com', 1, 1, 1, 1, 1, 1);
-            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`) VALUES ('user5@gmail.com', 1, 1, 1, 0, 1, 0);
+            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`,`game`) VALUES ('user1@gmail.com', 0, 1, 1, 1, 0, 0, 0);
+            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`,`game`) VALUES ('user2@gmail.com', 0, 1, 0, 1, 1, 0, 0);
+            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`,`game`) VALUES ('user3@gmail.com', 0, 0, 1, 0, 0, 0, 0);
+            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`,`game`) VALUES ('user4@gmail.com', 1, 1, 1, 1, 1, 1, 1);
+            INSERT INTO `user_settings`(`username`, `calendar`, `todo`, `weather`, `bio`, `news`, `contact_list`,`game`) VALUES ('user5@gmail.com', 1, 1, 1, 0, 1, 0, 1);
             
             INSERT INTO `user_info`(`username`, `bio`,`image`) VALUES ('user1@gmail.com', 'Likes cats','');
             INSERT INTO `user_info`(`username`, `bio`,`image`) VALUES ('user2@gmail.com', 'Likes dogs','');

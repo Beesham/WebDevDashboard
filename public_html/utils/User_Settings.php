@@ -6,5 +6,6 @@ class User_Settings {
     public $todo;
     public $weather;
     public $bio;
+    public $game;
 }
 ?>
