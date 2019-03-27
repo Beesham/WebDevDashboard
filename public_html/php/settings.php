@@ -2,21 +2,23 @@
 <!-- Author(s): Beesham Sarendranauth | Billy Le -->
 <?php
     include_once('../utils/HTTPUtils.php');
-	include_once('../utils/HTTPUtils.php');
 	include_once('../utils/UserManager.php');
 	include_once('../utils/User_Settings.php');
+	include_once('../utils/update_UserSettings.php');
 
     session_start();
     if(!array_key_exists('logged_in', $_SESSION)) {
         HTTPUtils::redirectPage('/php/homepage.php');
     }
-	$user_settings=UserManager::getUserSettings($_SESSION["username"]);
+	
+	$user_settings = UserManager::getUserSettings($_SESSION["username"]);
 	
 	$bioValue = $user_settings->bio;
 	$todoValue = $user_settings->todo;
 	$weatherValue = $user_settings->weather;
     $gameValue = $user_settings->game;
     $newsValue = $user_settings->news;
+	
 ?>
 <html>
 
@@ -56,9 +58,9 @@
 <ul class="toggleMenu"><b>
 	<li>User Greeting</li>
 	<div class="usergreetingSwitch">
-	<form action="#" method="POST">
+	<form action="/php/update_UserSettings.php" method="POST">
 		<label class="switch">
-		<input type="checkbox" id="usergreetBtn" checked>
+		<input type="checkbox" <?php if($bioValue === 1) {echo 'checked';} ?>name="bioBtn">
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -69,46 +71,56 @@
 	
 	<li>To Do List</li>
 	<div class="todolistSwitch">
+	<form action="/php/update_UserSettings.php" method="POST">
 		<label class="switch">
-		<input type="checkbox" id="todolistBtn">
+		<input type="hidden" name="todoValue" value="0">
+		<input type="checkbox" name="todoValue" value="1"<?php if ($todoValue == '1') echo 'checked="checked"';?>/>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
+	</form>
 	</div>
 	
 	<li>Weather</li>
 	<div class="weatherSwitch">
+	<form action="/php/update_UserSettings.php" method="POST">
 		<label class="switch">
-		<input type="checkbox" id="weatherBtn">
+		<input type="checkbox" id="weatherBtn" <?php if ($weatherValue == '1'){?> checked="checked" <?php } ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
+	</form>
 	</div>
 	
 	<li>Game</li>
 	<div class="gameSwitch">
+	<form action="/php/update_UserSettings.php" method="POST">
 		<label class="switch">
-		<input type="checkbox" id="gameBtn" value="1">
+		<input type="checkbox" id="gameBtn"<?php if($gameValue == '1') {echo 'checked';} ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
+	</form>
 	</div>
 	
 	<li>News</li>
 	<div class="newsSwitch">
+	<form action="/php/update_UserSettings.php" method="POST">
 		<label class="switch">
-		<input type="checkbox" id="newsBtn">
+		<input type="hidden" name="newsBtn" value="0">
+		<input type="checkbox" id="newsBtn" value="1"checked<?php if($newsValue == '0') {echo 'disabled';} ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
+	</form>
 	</div>
 </ul>
 	<button id="saveSettings">Save Tile Settings</button>
@@ -168,11 +180,8 @@ ZZEOF;
         unset($_SESSION['change_password_success']);
     }
 
-<<<<<<< HEAD
-</main>
-=======
 ?>
->>>>>>> master
+
 
 </body>
 </html>
