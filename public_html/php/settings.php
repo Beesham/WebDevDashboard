@@ -34,15 +34,13 @@
 
 <!-- Registered user to change their current password -->
 <div id='changePassword'>
-                <form action="/php/changePassword.php" method="POST">
-                    <div class="changePassword">
-                        <label for="username"><b>Reset Password:</b></label>
-                        <input type="text" placeholder="Enter Original Password" name="orgpassword" required>
-                        <label for="password"><b>Confirm New Password:</b></label>
-                        <input type="password" placeholder="Enter New Password" name="newpassword" required><br>
-                        <button type="submit">Change Password</button>
-                    </div>
-                </form>    
+    <form action="/php/change_password.php" method="POST">
+        <div class="changePassword">
+            <label for="username"><b>Reset Password:</b></label>
+            <input type="password" placeholder="Enter New Password" name="password" required>
+            <button type="submit">Change Password</button>
+        </div>
+    </form>    
 
 <!-- Toggle switches to update registed users main page -->
 <ul>
@@ -147,6 +145,16 @@ ZZEOF;
             </script>
 ZZEOF;
         unset($_SESSION['delete_user_success']);
+    }
+    
+    if(array_key_exists('change_password_success', $_SESSION) &&
+        ($_SESSION['change_password_success'] == 'true')) {
+        echo <<<ZZEOF
+            <script>
+                alert("Successfully changed password!");
+            </script>
+ZZEOF;
+        unset($_SESSION['change_password_success']);
     }
 
 ?>
