@@ -150,7 +150,7 @@ class DatabaseUtils {
         } else return true;
     }
 
-    function updateUserSettings($username) {
+    function updateUserSettings($username, $user_settings) {
         global $conn;
          
         $stmt = $conn->prepare("UPDATE user_settings
