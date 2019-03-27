@@ -1,11 +1,20 @@
 <?php
     include_once('../utils/HTTPUtils.php');
 	include_once('../utils/HTTPUtils.php');
+	include_once('../utils/UserManager.php');
+	include_once('../utils/User_Settings.php');
 
     session_start();
     if(!array_key_exists('logged_in', $_SESSION)) {
         HTTPUtils::redirectPage('/php/homepage.php');
     }
+	$user_settings=UserManager::getUserSettings($_SESSION["username"]);
+	
+	$bioValue = $user_settings->bio;
+	$todoValue = $user_settings->todo;
+	$weatherValue = $user_settings->weather;
+    $gameValue = $user_settings->game;
+    $newsValue = $user_settings->news;
 ?>
 
 <!DOCTYPE HTML5>
@@ -36,30 +45,31 @@ Settings
                 <form action="/php/changePassword.php" method="POST">
                     <div class="changePassword">
                         <label for="username"><b>Reset Password:</b></label>
-                        <input type="text" placeholder="Enter Original Password" name="orgpassword" required>
-                        <label for="password"><b>Confirm New Password:</b></label>
-                        <input type="password" placeholder="Enter New Password" name="newpassword" required><br>
+                        <input type="text" placeholder="Enter New Password" name="orgpassword" required><br>
                         <button type="submit">Change Password</button>
                     </div>
                 </form>    
+</div>
 
 <!-- Toggle switches to update registed users main page -->
-<ul>
+<ul class="toggleMenu"><b>
 	<li>User Greeting</li>
 	<div class="usergreetingSwitch">
+	<form action="#" method="POST">
 		<label class="switch">
-		<input type="checkbox" id="togBtn">
+		<input type="checkbox" id="usergreetBtn" checked>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
+	</form>
 	</div>
 	
 	<li>To Do List</li>
 	<div class="todolistSwitch">
 		<label class="switch">
-		<input type="checkbox" id="togBtn">
+		<input type="checkbox" id="todolistBtn">
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -70,7 +80,7 @@ Settings
 	<li>Weather</li>
 	<div class="weatherSwitch">
 		<label class="switch">
-		<input type="checkbox" id="togBtn">
+		<input type="checkbox" id="weatherBtn">
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -81,7 +91,7 @@ Settings
 	<li>Game</li>
 	<div class="gameSwitch">
 		<label class="switch">
-		<input type="checkbox" id="togBtn">
+		<input type="checkbox" id="gameBtn" value="1">
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -92,16 +102,15 @@ Settings
 	<li>News</li>
 	<div class="newsSwitch">
 		<label class="switch">
-		<input type="checkbox" id="togBtn">
+		<input type="checkbox" id="newsBtn">
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
 	</div>
-	
-	<button id="saveSettings">Save Tile Settings</button>
 </ul>
+	<button id="saveSettings">Save Tile Settings</button>
 	
 <!-- Admin Panel -->
 <main>
@@ -127,10 +136,6 @@ Settings
 	</form>
 </div>
 
-<!-- Display all registered users -->
-<div class="displayUsers">
-<p>Number of Users registered: <p>
-</div>
 </main>
 
 </body>

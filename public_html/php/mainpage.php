@@ -19,7 +19,7 @@
 <header class="header">
     <h1 class="logo"><a href="#">MY DASHBOARD</a></h1>
     <ul class="main-nav">
-        <li><a href="#">SETTINGS</a></li>
+        <li><a href="/php/settings.php">SETTINGS</a></li>
         <li><a href="/php/logout_user.php">LOGOUT</a></li>
     </ul>
 </header>

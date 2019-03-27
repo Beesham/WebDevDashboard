@@ -3,6 +3,7 @@
 include_once("../utils/DatabaseUtils.php");
 include_once("../utils/HTTPUtils.php");
 include_once("../utils/User.php");
+include_once("../utils/User_Settings.php");
 
 class UserManager {
 
@@ -48,5 +49,16 @@ class UserManager {
         $user->username = $email;
         return $db->insertNewUser($user, $password); //return true or false if insert succeeded
     }
+	
+	static function getUserSettings($username) {
+        $db = UserManager::getdb();
+        $userSettings = $db->queryUsers($username);
+        return $userSettings;
+    }
+	
+	static function updateSettings($username, $user_settings) {
+		$db = UserManager::getdb();
+		return $db->updateUserSettings($username, $user_settings);
+	}
 }
 ?>
