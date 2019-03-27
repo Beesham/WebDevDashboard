@@ -4,14 +4,13 @@
     include_once('../utils/HTTPUtils.php');
 	include_once('../utils/UserManager.php');
 	include_once('../utils/User_Settings.php');
-	include_once('../utils/update_UserSettings.php');
 
     session_start();
     if(!array_key_exists('logged_in', $_SESSION)) {
         HTTPUtils::redirectPage('/php/homepage.php');
     }
 	
-	$user_settings = UserManager::getUserSettings($_SESSION["username"]);
+	$user_settings = UserManager::getUserSettings($_SESSION['username']);
 	
 	$bioValue = $user_settings->bio;
 	$todoValue = $user_settings->todo;
@@ -41,6 +40,7 @@
 </header>
 
 <body>
+
 <h1>Settings</h1>
 
 <!-- Registered user to change their current password -->
@@ -54,53 +54,47 @@
         </div>
     </form>    
 
-<!-- Toggle switches to update registed users main page -->
+<!-- Toggle switches to update registed users settings -->
 <ul class="toggleMenu"><b>
+<form method="POST" action="/php/settings.php" id="mysettings" name="mysettings">
+
 	<li>User Greeting</li>
-	<div class="usergreetingSwitch">
-	<form action="/php/update_UserSettings.php" method="POST">
+	<div class="bio">
 		<label class="switch">
-		<input type="checkbox" <?php if($bioValue === 1) {echo 'checked';} ?>name="bioBtn">
+		<input id="checkBox" type="checkbox" name="bio" value=""<?php if(isset($_POST['bio'])) echo 'checked="checked"'; ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
-	</form>
 	</div>
 	
 	<li>To Do List</li>
-	<div class="todolistSwitch">
-	<form action="/php/update_UserSettings.php" method="POST">
+	<div class="todo">
 		<label class="switch">
-		<input type="hidden" name="todoValue" value="0">
-		<input type="checkbox" name="todoValue" value="1"<?php if ($todoValue == '1') echo 'checked="checked"';?>/>
+		<input id="checkBox" type="checkbox" name="todo" value=""<?php if(isset($_POST['todo'])) echo 'checked="checked"'; ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
-	</form>
 	</div>
 	
 	<li>Weather</li>
-	<div class="weatherSwitch">
-	<form action="/php/update_UserSettings.php" method="POST">
+	<div class="weather">
 		<label class="switch">
-		<input type="checkbox" id="weatherBtn" <?php if ($weatherValue == '1'){?> checked="checked" <?php } ?>>
+		<input id="checkBox" type="checkbox" name="weather" value=""<?php if(isset($_POST['weather'])) echo 'checked="checked"'; ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
-	</form>
 	</div>
 	
 	<li>Game</li>
-	<div class="gameSwitch">
-	<form action="/php/update_UserSettings.php" method="POST">
+	<div class="game">
 		<label class="switch">
-		<input type="checkbox" id="gameBtn"<?php if($gameValue == '1') {echo 'checked';} ?>>
+		<input id="checkBox" type="checkbox" name="game" value=""<?php if(isset($_POST['game'])) echo 'checked="checked"'; ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -110,20 +104,19 @@
 	</div>
 	
 	<li>News</li>
-	<div class="newsSwitch">
-	<form action="/php/update_UserSettings.php" method="POST">
+	<div class="news">
 		<label class="switch">
-		<input type="hidden" name="newsBtn" value="0">
-		<input type="checkbox" id="newsBtn" value="1"checked<?php if($newsValue == '0') {echo 'disabled';} ?>>
+		<input id="checkBox" type="checkbox" name="news" value=""<?php if(isset($_POST['news'])) echo 'checked="checked"'; ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
-	</form>
 	</div>
+		
+	<button id="mysettings" type="submit" form="mysettings" name="mysettings">Save Tile Settings</button>
+</form>
 </ul>
-	<button id="saveSettings">Save Tile Settings</button>
 	
 <!-- Admin Panel -->
 <?php
@@ -181,7 +174,6 @@ ZZEOF;
     }
 
 ?>
-
 
 </body>
 </html>
