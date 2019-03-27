@@ -35,12 +35,12 @@ if (isset($_POST['submit'])){
   <div class="menu">
   <a href="homepage.php">Home</a>
   <a href="mainpage.php"> Main</a>
-  <a class="active" href="contact.php">Contact</a>
+  <a class="active" href="/php/contact.php">Contact</a>
   </div>
 
   <br>
   <div class="contact_box">
-  <form id="contact" action="contact.php" method="post">
+  <form id="contact" action="/php/contact.php" method="post">
     <h4> Send Us A Message </h4>
 
     <fieldset>
