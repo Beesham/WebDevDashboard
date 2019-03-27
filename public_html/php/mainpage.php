@@ -1,13 +1,14 @@
 <?php
     include_once('../utils/HTTPUtils.php');
-    include_once('../utils/DatabaseUtils.php');
+    include_once("../utils/UserManager.php");
     include_once('../../extras/databaseConfig.php');
 
     session_start();
 
     $username = $_SESSION['username'];
 
-    $usersettings = DatabaseUtils::querySettings($username);
+    $db= UserManager::getdb();
+    $usersettings = $db->querySettings($username);
 
     //if($usersettings['calendar'] == "0"){
     //  echo '<style type="text/css">
