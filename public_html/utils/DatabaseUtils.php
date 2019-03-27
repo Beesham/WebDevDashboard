@@ -127,10 +127,10 @@ class DatabaseUtils {
         if(count($row) > 0) {
             $user_settings = new User_Settings();
             $user_settings->calendar = $row['calendar']; 
-            $user_settings->news = $row['todo']; 
-            $user_settings->todo = $row['weather']; 
-            $user_settings->weather = $row['bio']; 
-            $user_settings->bio = $row['news']; 
+            $user_settings->news = $row['news']; 
+            $user_settings->todo = $row['todo']; 
+            $user_settings->weather = $row['weather']; 
+            $user_settings->bio = $row['bio']; 
             $user_settings->game = $row['game']; 
             return $user_settings; 
         }
