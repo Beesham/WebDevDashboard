@@ -12,10 +12,10 @@ if (isset($_POST['submit'])){
 
 
  if (mail($to,$subject,$body,$headers)){
-   header( "Location: success.html" );
+   header( "Location: /html/success.html" );
  }
  else {
-   header( "Location: error.html" );
+   header( "Location: /html/error.html" );
  }
 
 }
@@ -23,7 +23,7 @@ if (isset($_POST['submit'])){
 
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" type="text/css" href="contact.css">
+<link rel="stylesheet" type="text/css" href="/css/contact.css">
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <head>
 <title> Contact us</title>
@@ -33,8 +33,8 @@ if (isset($_POST['submit'])){
 <body>
 
   <div class="menu">
-  <a href="homepage.php">Home</a>
-  <a href="mainpage.php"> Main</a>
+  <a href="/php/homepage.php">Home</a>
+  <a href="/html/aboutus.html">About Us</a>
   <a class="active" href="/php/contact.php">Contact</a>
   </div>
 
