@@ -1,3 +1,5 @@
+<!DOCTYPE HTML5>
+<!-- Author(s): Beesham Sarendranauth | Billy Le -->
 <?php
     include_once('../utils/HTTPUtils.php');
 	include_once('../utils/HTTPUtils.php');
@@ -16,13 +18,12 @@
     $gameValue = $user_settings->game;
     $newsValue = $user_settings->news;
 ?>
-
-<!DOCTYPE HTML5>
-<title>
-Settings
-</title>
+<html>
 
 <head>
+
+    <title>Settings</title>
+
 	<link rel="stylesheet" type="text/css" href="/css/settings.css">
 	<script src="/javascript/settings.js" type="application/javascript"></script>
 </head>
@@ -42,14 +43,14 @@ Settings
 
 <!-- Registered user to change their current password -->
 <div id='changePassword'>
-                <form action="/php/changePassword.php" method="POST">
-                    <div class="changePassword">
-                        <label for="username"><b>Reset Password:</b></label>
-                        <input type="text" placeholder="Enter New Password" name="orgpassword" required><br>
-                        <button type="submit">Change Password</button>
-                    </div>
-                </form>    
-</div>
+
+    <form action="/php/change_password.php" method="POST">
+        <div class="changePassword">
+            <label for="username"><b>Reset Password:</b></label>
+            <input type="password" placeholder="Enter New Password" name="password" required>
+            <button type="submit">Change Password</button>
+        </div>
+    </form>    
 
 <!-- Toggle switches to update registed users main page -->
 <ul class="toggleMenu"><b>
@@ -113,29 +114,65 @@ Settings
 	<button id="saveSettings">Save Tile Settings</button>
 	
 <!-- Admin Panel -->
-<main>
-<h2>ADMIN CONTROLS</h2>
+<?php
+if(array_key_exists('is_admin', $_SESSION) && ($_SESSION['is_admin'] == 'true')) {
+    echo <<<ZZEOF
+    <main>
+    <h2>ADMIN CONTROLS</h2>
 
-<!-- Admin control to change any registered users password -->
-<div class="changeuserpassword">
-	<br>
-	<form action="username">Username<input type="text" name="username" id="username" maxlength="10"> 
-	<label for="username"></label>
-	<form action="changepassword">Change User Password
-	<input type="password" name="changepassword" id="changepassword" maxlength="10"> 
-	<label for="password"></label> 
-	<input type="submit" value="Change"> 
-	</form>
-</div>
+    <!-- Admin control to change any registered users password -->
+    <div class="changeuserpassword">
+        <br>
+        <form action="/php/change_password.php" method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" maxlength="100"> 
+            <label for="password">Change User Password</label>
+            <input type="password" name="password" id="password" maxlength="100"> 
+            <input type="submit" value="Change"> 
+        </form>
+    </div>
 
-<!-- Admin control to delete a registered user -->
-<div class="deleteuser">
-	<form action="deleteuser">Delete User<input type="text" name="deleteuser" id="deleteuser" maxlength="10"> 
-	<label for="deleteuser"></label>
-	<input type="submit" value="Delete"> 
-	</form>
-</div>
+    <!-- Admin control to delete a registered user -->
+    <div class="deleteuser">
+        <form action="/php/delete_user.php" method="POST">
+            <label for="username">Delete User</label>
+            <input type="text" placeholder="user@example.com" name="username" id="username" maxlength="100"> 
+            <input type="submit" value="Delete"> 
+        </form>
+    </div>
 
+    <!-- Display all registered users -->
+    <div class="displayUsers">
+    <p>Number of Users registered: <p>
+    </div>
+    </main>
+ZZEOF;
+}
+    if(array_key_exists('delete_user_success', $_SESSION) &&
+        ($_SESSION['delete_user_success'] == 'true')) {
+        echo <<<ZZEOF
+            <script>
+                alert("Successfully deleted user!");
+            </script>
+ZZEOF;
+        unset($_SESSION['delete_user_success']);
+    }
+    
+    if(array_key_exists('change_password_success', $_SESSION) &&
+        ($_SESSION['change_password_success'] == 'true')) {
+        echo <<<ZZEOF
+            <script>
+                alert("Successfully changed password!");
+            </script>
+ZZEOF;
+        unset($_SESSION['change_password_success']);
+    }
+
+<<<<<<< HEAD
 </main>
+=======
+?>
+>>>>>>> master
 
 </body>
+</html>

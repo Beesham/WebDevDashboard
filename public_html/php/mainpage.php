@@ -80,6 +80,7 @@
 </body>
 <footer id="mainPgFooter">
 
-    <p>About us | Contact us</p>
+    <a href="/html/aboutus.html">About us</a>
+    <a href="/php/contact.php">Contact us</a>
 
 </footer>

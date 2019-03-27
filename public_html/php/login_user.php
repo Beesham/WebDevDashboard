@@ -22,7 +22,7 @@ function login_user() {
             
             global $admin_username;
 
-            if(strcmp($_POST['username'], $admin_username)) {
+            if(strcmp($_POST['username'], $admin_username) == 0) {
                 $_SESSION['is_admin'] = 'true';
             }
             HTTPUtils::redirectPage("/php/mainpage.php");
