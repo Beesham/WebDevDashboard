@@ -49,6 +49,11 @@ class UserManager {
         return $db->insertNewUser($user, $password); //return true or false if insert succeeded
     }
 
+    static function deleteUser($username) {
+        $db = UserManager::getdb();
+        return $db->deleteUser($username);
+    }
+
     static function changeUserPassword($username, $password) {
         $db = UserManager::getdb();
         return $db->updatePassword($username, $password);

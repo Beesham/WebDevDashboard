@@ -1,3 +1,5 @@
+<!DOCTYPE HTML5>
+<!-- Author(s): Beesham Sarendranauth | Billy Le -->
 <?php
     include_once('../utils/HTTPUtils.php');
 	include_once('../utils/HTTPUtils.php');
@@ -7,13 +9,12 @@
         HTTPUtils::redirectPage('/php/homepage.php');
     }
 ?>
-
-<!DOCTYPE HTML5>
-<title>
-Settings
-</title>
+<html>
 
 <head>
+
+    <title>Settings</title>
+
 	<link rel="stylesheet" type="text/css" href="/css/settings.css">
 	<script src="/javascript/settings.js" type="application/javascript"></script>
 </head>
@@ -124,9 +125,10 @@ if(array_key_exists('is_admin', $_SESSION) && ($_SESSION['is_admin'] == 'true'))
 
     <!-- Admin control to delete a registered user -->
     <div class="deleteuser">
-        <form action="deleteuser">Delete User<input type="text" name="deleteuser" id="deleteuser" maxlength="10"> 
-        <label for="deleteuser"></label>
-        <input type="submit" value="Delete"> 
+        <form action="/php/delete_user.php" method="POST">
+            <label for="username">Delete User</label>
+            <input type="text" placeholder="user@example.com" name="username" id="username" maxlength="100"> 
+            <input type="submit" value="Delete"> 
         </form>
     </div>
 
@@ -137,6 +139,17 @@ if(array_key_exists('is_admin', $_SESSION) && ($_SESSION['is_admin'] == 'true'))
     </main>
 ZZEOF;
 }
+    if(array_key_exists('delete_user_success', $_SESSION) &&
+        ($_SESSION['delete_user_success'] == 'true')) {
+        echo <<<ZZEOF
+            <script>
+                alert("Successfully deleted user!");
+            </script>
+ZZEOF;
+        unset($_SESSION['delete_user_success']);
+    }
+
 ?>
 
 </body>
+</html>

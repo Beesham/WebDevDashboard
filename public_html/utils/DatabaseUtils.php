@@ -178,7 +178,7 @@ class DatabaseUtils {
         
         $stmt = $conn->prepare("DELETE from users 
                                 WHERE  username = :username");
-        $stmt->bindParam(':username', $user->username);
+        $stmt->bindParam(':username', $username);
         if(!$stmt->execute()) {
             return false;
         } else return true;
