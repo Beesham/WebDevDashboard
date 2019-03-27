@@ -23,7 +23,7 @@ if (isset($_POST['submit'])){
 
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" type="text/css" href="/css/contact.css">
+<link rel="stylesheet" type="text/css" href="contact.css">
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <head>
 <title> Contact us</title>
