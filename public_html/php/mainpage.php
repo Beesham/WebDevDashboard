@@ -7,97 +7,81 @@
 
     $username = $_SESSION['username'];
 
-    $db= UserManager::getdb();
-    $usersettings = $db->querySettings($username);
+    $usersettings = UserManager::getUserSettings($username);
 
-    //if($usersettings['calendar'] == "0"){
-    //  echo '<style type="text/css">
-    //   .greeting {
-    //       visibility: hidden;
-    //   }
-    //   </style>'
-    //}
-    //else{
-  //    echo '<style type="text/css">
-  //     .greeting {
-  //         visibility: visible;
-  //     }
-  //     </style>'
-  //  } no calendar in mainpage
-
-    if($usersettings['news'] == "0"){
+    if($usersettings->news == "0"){
       echo '<style type="text/css">
        #news-container {
            visibility: hidden;
        }
-       </style>'
+       </style>';
     }
     else{
       echo '<style type="text/css">
        #news-container {
            visibility: visible;
        }
-       </style>'
+       </style>';
     }
 
-    if($usersettings['todo'] == "0"){
+    if($usersettings->todo == "0"){
       echo '<style type="text/css">
        #todolist {
            visibility: hidden;
        }
-       </style>'
+       </style>';
     }
     else{
       echo '<style type="text/css">
        #todolist {
            visibility: visible;
        }
-       </style>'
+       </style>';
     }
 
-    if($usersettings['weather'] == "0"){
+    if($usersettings->weather == "0"){
       echo '<style type="text/css">
        #weather-container {
            visibility: hidden;
        }
-       </style>'
+       </style>';
     }
     else{
       echo '<style type="text/css">
        #weather-container {
            visibility: visible;
        }
-       </style>'
+       </style>';
     }
 
-    if($usersettings['bio'] == "0"){ //assuming this is greeting
+    if($usersettings->bio == "0"){ //assuming this is greeting
       echo '<style type="text/css">
        .greeting {
            visibility: hidden;
        }
-       </style>'
+       </style>';
     }
     else{
       echo '<style type="text/css">
        .greeting {
            visibility: visible;
        }
-       </style>'
+       </style>';
     }
 
-    if($usersettings['game'] == "0"){
+    if($usersettings->game == "0"){
       echo '<style type="text/css">
        #game {
            visibility: hidden;
        }
-       </style>'
+       </style>';
     }
     else{
       echo '<style type="text/css">
        #game {
            visibility: visible;
        }
-       </style>'
+       </style>';
     }
 
     if(!array_key_exists('logged_in', $_SESSION)) {
