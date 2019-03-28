@@ -58,5 +58,12 @@ class UserManager {
         $db = UserManager::getdb();
         return $db->updatePassword($username, $password);
     }
+
+    static function getUserSettings($username) {
+        $db = UserManager::getdb();
+        return $db->querySettings($username);
+    }
+
+
 }
 ?>
