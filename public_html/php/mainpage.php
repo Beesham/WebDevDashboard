@@ -1,7 +1,89 @@
 <?php
     include_once('../utils/HTTPUtils.php');
+    include_once("../utils/UserManager.php");
+    include_once('../../extras/databaseConfig.php');
 
     session_start();
+
+    $username = $_SESSION['username'];
+
+    $usersettings = UserManager::getUserSettings($username);
+
+    if($usersettings->news == "0"){
+      echo '<style type="text/css">
+       #news-container {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       #news-container {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if($usersettings->todo == "0"){
+      echo '<style type="text/css">
+       #todolist {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       #todolist {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if($usersettings->weather == "0"){
+      echo '<style type="text/css">
+       #weather-container {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       #weather-container {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if($usersettings->bio == "0"){ //assuming this is greeting
+      echo '<style type="text/css">
+       .greeting {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       .greeting {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if($usersettings->game == "0"){
+      echo '<style type="text/css">
+       #game {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       #game {
+           visibility: visible;
+       }
+       </style>';
+    }
+
     if(!array_key_exists('logged_in', $_SESSION)) {
         HTTPUtils::redirectPage('/php/homepage.php');
     }
@@ -84,3 +166,4 @@
     <a href="/php/contact.php">Contact us</a>
 
 </footer>
+</html>
