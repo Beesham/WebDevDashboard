@@ -10,10 +10,10 @@ class DatabaseUtils {
     private $conn;
 
     function connectToDb() {
-        global $username, $servername, $dbname, $password;
+        global $dbusername, $servername, $dbname, $password;
         global $conn;
         try {
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password); //pulls creds from databaseConfig.php
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $password); //pulls creds from databaseConfig.php
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(PDOException $e) {
