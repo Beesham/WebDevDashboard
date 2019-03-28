@@ -185,6 +185,19 @@ class DatabaseUtils {
 
     }
 
+    function addToDoListItem($username, $item){
+        global $conn;
+
+        $stmt = $conn->prepare("INSERT INTO user_todo (username, items)
+                                VALUES (:username, :items)");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':items', $item);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+
+    }
+
     //insert new user
     function insertNewUser($user, $password) {
         global $conn;
@@ -242,7 +255,7 @@ class DatabaseUtils {
                         game boolean DEFAULT 1, 
                         FOREIGN KEY (username) REFERENCES users(username)
                         ON DELETE CASCADE);");
-            $conn->exec("CREATE TABLE user_todo (username varchar(50) not null PRIMARY KEY,
+            $conn->exec("CREATE TABLE user_todo (username varchar(50) not null,
                         items varchar(1024) not null,
                         FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_contactList (username varchar(50) not null PRIMARY KEY,

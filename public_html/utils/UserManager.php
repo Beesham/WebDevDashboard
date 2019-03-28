@@ -64,6 +64,11 @@ class UserManager {
         return $db->querySettings($username);
     }
 
+    static function addToDoListItem($username, $item) {
+        $db = UserManager::getdb();
+        return $db->addToDoListItem($username, $item);
+    }
+
 
 }
 ?>
