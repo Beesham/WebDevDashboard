@@ -61,7 +61,7 @@
 	<li>User Greeting</li>
 	<div class="bio">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="bio" value=""<?php if(isset($_POST['bio'])) echo 'checked="checked"'; ?>>
+		<input id="checkBox" type="checkbox" name="bio" value=""<?php if ($bioValue=='1') echo 'checked' ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -72,7 +72,7 @@
 	<li>To Do List</li>
 	<div class="todo">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="todo" value=""<?php if(isset($_POST['todo'])) echo 'checked="checked"'; ?>>
+		<input id="checkBox" type="checkbox" name="todo" value=""<?php if ($todoValue=='1') echo 'checked' ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -83,7 +83,7 @@
 	<li>Weather</li>
 	<div class="weather">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="weather" value=""<?php if(isset($_POST['weather'])) echo 'checked="checked"'; ?>>
+		<input id="checkBox" type="checkbox" name="weather" value=""<?php if ($weatherValue=='1') echo 'checked' ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -94,19 +94,19 @@
 	<li>Game</li>
 	<div class="game">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="game" value=""<?php if(isset($_POST['game'])) echo 'checked="checked"'; ?>>
+		<input id="checkBox" type="checkbox" name="game" value=""<?php if ($gameValue=='1') echo 'checked' ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
-	</form>
+
 	</div>
 	
 	<li>News</li>
 	<div class="news">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="news" value=""<?php if(isset($_POST['news'])) echo 'checked="checked"'; ?>>
+		<input id="checkBox" type="checkbox" name="news" value=""<?php if ($newsValue=='1') echo 'checked' ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
