@@ -149,7 +149,7 @@ if(array_key_exists('is_admin', $_SESSION) && ($_SESSION['is_admin'] == 'true'))
     </div>
 
     <!-- Display all registered users -->
-    <div class="displayUsers">
+    <div class="displayUsers" hidden>
     <p>Number of Users registered: <p>
     </div>
     </main>
