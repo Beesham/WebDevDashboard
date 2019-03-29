@@ -1,6 +1,8 @@
 function init() {
     document.getElementById("inputBttn").addEventListener("click", newToDoListItem);
     document.getElementById("game-reset-button").addEventListener("click", resetGame);
+
+    //Time intreval for AJAX calls
     window.setInterval(updateGreeting, 3600000);
     window.setInterval(refreshNews, 3600000);
     window.setInterval(updateWeather, 3600000);
@@ -49,7 +51,6 @@ function updateGreeting(){
     quotes.onreadystatechange=function() {
         if (quotes.readyState==4 && quotes.status==200) {
             var data = JSON.parse(quotes.response);
-            console.log(data);
             var q = data.contents.quotes[0].quote;
             document.getElementById("quote").innerHTML="Quote of the day: " + q;
         }
@@ -71,11 +72,12 @@ function newToDoListItem() {
 
         var ul = document.getElementById("list");
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("  + " + item));
+        li.appendChild(document.createTextNode(item));
         ul.appendChild(li);
         document.getElementById("input").value = "";
         li.onclick = removeItem;
 
+        // AJAX call to insert data into database
         postItem(item);
     }
 }
@@ -87,24 +89,44 @@ function newToDoListItem() {
 function removeItem(e) {
     e.target.parentElement.removeChild(e.target);
     item = e.target.innerHTML;
+
+    // AJAX call to delete data into database
     deleteItem(item);
 }
 
-function deleteItem(item){
-    console.log(item);
+/**
+ * Adds the user's to do list item to database using AJAX call
+ * @param item the to-do list item to be added
+ */
+function postItem(item){
+    data = 'item=' + item;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'post_list_item.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+        if(xhr.status !== 200){
+            return;
+        }
+        // Whatever you wanted to do when server responded with HTTP 200 (OK)
+        // I've added a DIV with id of testdiv to show the result there
+        console.log(this.responseText);
+    };
+    xhr.send(data);
+}
 
+/**
+ * Removes the user's to do list item from the database using AJAX call
+ * @param item the to-do list item to be deleted
+ */
+function deleteItem(item){
     data = 'item=' + item;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'delete_list_item.php', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onload = function () {
         if(xhr.status !== 200){
-            // Server does not return HTTP 200 (OK) response.
-            // Whatever you wanted to do when server responded with another code than 200 (OK)
-            return; // return is important because the code below is NOT executed if the response is other than HTTP 200 (OK)
+            return;
         }
-        // Whatever you wanted to do when server responded with HTTP 200 (OK)
-        // I've added a DIV with id of testdiv to show the result there
         console.log(this.responseText);
     };
     xhr.send(data);
@@ -120,7 +142,6 @@ function checkForHtmlInjection(arbitraryHtmlString ) {
     temp.innerHTML = arbitraryHtmlString;
     return temp.innerText;
 }
-
 
 // Drag & Drop game
 function enableDragDrop(){
@@ -264,26 +285,6 @@ function resetGame(){
     enableDragDrop();
 }
 
-function postItem(item){
-    data = 'item=' + item;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'post_list_item.php', true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onload = function () {
-        if(xhr.status !== 200){
-            // Server does not return HTTP 200 (OK) response.
-            // Whatever you wanted to do when server responded with another code than 200 (OK)
-            return; // return is important because the code below is NOT executed if the response is other than HTTP 200 (OK)
-        }
-        // Whatever you wanted to do when server responded with HTTP 200 (OK)
-        // I've added a DIV with id of testdiv to show the result there
-        console.log(this.responseText);
-    };
-    xhr.send(data);
-}
-
-
-
 // Weather
 /**
  * Updates weather using AJAX asynchronous call
@@ -318,8 +319,6 @@ function getNews(){
     news.onreadystatechange=function() {
         if (news.readyState==4 && news.status==200) {
             var data = JSON.parse(news.response);
-            console.log(data);
-
             for(i = 0; i < 5; i++){
                 var cityDiv = document.getElementById("news-articles");
                 var newDiv = document.createElement("a");
