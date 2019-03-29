@@ -56,12 +56,12 @@
 
 <!-- Toggle switches to update registed users settings -->
 <ul class="toggleMenu"><b>
-<form method="POST" action="/php/settings.php" id="mysettings" name="mysettings">
+<form method="POST" action="/php/update_UserSettings.php" id="mysettings" name="mysettings">
 
 	<li>User Greeting</li>
 	<div class="bio">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="bio" value=""<?php if ($bioValue=='1') echo 'checked' ?>>
+		<input id="checkBox1" type="checkbox" name="bio"  onclick="toggleCheckBoxVal('checkBox1')" <?php if ($bioValue=='1') echo 'value="1" checked' ; else echo 'value="0"' ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -72,7 +72,7 @@
 	<li>To Do List</li>
 	<div class="todo">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="todo" value=""<?php if ($todoValue=='1') echo 'checked' ?>>
+		<input id="checkBox2" type="checkbox" name="todo" onclick="toggleCheckBoxVal('checkBox2')" <?php if ($todoValue=='1') echo 'value="1" checked'; else echo 'value="0"'  ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -83,7 +83,7 @@
 	<li>Weather</li>
 	<div class="weather">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="weather" value=""<?php if ($weatherValue=='1') echo 'checked' ?>>
+		<input id="checkBox3" type="checkbox" name="weather" onclick="toggleCheckBoxVal('checkBox3')" <?php if ($weatherValue=='1') echo 'value="1" checked'; else echo 'value="0"' ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -94,7 +94,7 @@
 	<li>Game</li>
 	<div class="game">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="game" value=""<?php if ($gameValue=='1') echo 'checked' ?>>
+		<input id="checkBox4" type="checkbox" name="game"  onclick="toggleCheckBoxVal('checkBox4')" <?php if ($gameValue=='1') echo "value='1' checked"; else echo 'value="0"' ?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
@@ -102,19 +102,21 @@
 		</label>
 
 	</div>
-	
+    
+  
+    	
 	<li>News</li>
 	<div class="news">
 		<label class="switch">
-		<input id="checkBox" type="checkbox" name="news" value=""<?php if ($newsValue=='1') echo 'checked' ?>>
+		<input id="checkBox5" type="checkbox" name="news"  onclick="toggleCheckBoxVal('checkBox5')" <?php if ($newsValue=='1') echo "value='1' checked"; else echo 'value="0"'?>>
 		<div class="slider round"><!--ADDED HTML -->
 		<span class="on">ON</span>
 		<span class="off">OFF</span><!--END-->
 		</div>
 		</label>
 	</div>
-		
-	<button id="mysettings" type="submit" form="mysettings" name="mysettings">Save Tile Settings</button>
+	<script type="text/javascript" src="/javascript/settings_switches.js"></script>	
+	<button id="mysettingsbutton" type="submit">Save Tile Settings</button>
 </form>
 </ul>
 	
