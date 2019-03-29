@@ -41,7 +41,6 @@ function login_user_registered($username, $password) {
         $_SESSION['username'] = $username;
         $_SESSION['logged_in'] = true;
         unset($_SESSION['registration_error']);
-        UserManager::getUser(htmlspecialchars($_POST['username'], ENT_QUOTES));
         HTTPUtils::redirectPage("/php/mainpage.php");
     } else {
         $_SESSION['logged_in'] = false;
