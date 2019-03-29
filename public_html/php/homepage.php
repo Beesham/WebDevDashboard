@@ -24,7 +24,7 @@ Author(s): Beesham Sarendranauth
     }
 
     if(array_key_exists('logged_in', $_SESSION)) {
-        if($_SESSION['logged_in'] == 'true') HTTPUtils::redirectPage('/html/mainpage.html');
+        if($_SESSION['logged_in'] == 'true') HTTPUtils::redirectPage('/php/mainpage.php');
     }
 ?>
 
@@ -40,7 +40,7 @@ Author(s): Beesham Sarendranauth
         <div class="homepage_tab">
             <button class="homepage_tab_links" onclick="location.href='/php/homepage.php'">Home</button>
             <button class="homepage_tab_links" onclick="location.href='/html/aboutus.html'">About Us</button>
-            <button class="homepage_tab_links" onclick="location.href='/html/contact.html'">Contact Us</button>
+            <button class="homepage_tab_links" onclick="location.href='/php/contact.php'">Contact Us</button>
         </div> 
         
     </header>

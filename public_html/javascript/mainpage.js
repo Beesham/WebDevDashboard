@@ -1,6 +1,8 @@
 function init() {
     document.getElementById("inputBttn").addEventListener("click", newToDoListItem);
     document.getElementById("game-reset-button").addEventListener("click", resetGame);
+
+    //Time intreval for AJAX calls
     window.setInterval(updateGreeting, 3600000);
     window.setInterval(refreshNews, 3600000);
     window.setInterval(updateWeather, 3600000);
@@ -11,6 +13,137 @@ function init() {
     getNews();
 }
 
+window.addEventListener("load", init);
+
+
+// Greeting
+/**
+ * Updates the time, user greeting, and the quote of the day on the main page
+ */
+function updateGreeting(){
+
+    var greeting = "Hello, ";
+    var am_pm = null;
+    var currentdate = new Date();
+    var hour = currentdate.getHours();
+    var min = currentdate.getMinutes();
+
+    var time = currentdate.getHours() + ":"
+        + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
+    if (hour < 12){
+        greeting = "Good Morning";
+        am_pm = "AM";
+    }else if (hour == 12 && min < 60 || hour > 12 &&  hour < 17){
+        greeting = "Good Afternoon";
+        am_pm = "PM";
+    }else{
+        greeting = "Good Evening";
+        am_pm = "PM";
+    }
+
+    document.getElementById("time").innerHTML = time + " " + am_pm;
+
+    document.getElementById("greeting").innerHTML = greeting;
+
+    // AJAX call to get quote of the day - checks every 12 hour
+    var quotes = new XMLHttpRequest();
+    quotes.onreadystatechange=function() {
+        if (quotes.readyState==4 && quotes.status==200) {
+            var data = JSON.parse(quotes.response);
+            var q = data.contents.quotes[0].quote;
+            document.getElementById("quote").innerHTML="Quote of the day: " + q;
+        }
+    };
+    quotes.open('GET', "http://quotes.rest/qod.json", true);
+    quotes.send();
+};
+
+
+// To-do list
+/**
+ * To-do list implementation
+ */
+function newToDoListItem() {
+    var item = document.getElementById("input").value;
+    item = checkForHtmlInjection(item);
+
+    if (item) {
+
+        var ul = document.getElementById("list");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(item));
+        ul.appendChild(li);
+        document.getElementById("input").value = "";
+        li.onclick = removeItem;
+
+        // AJAX call to insert data into database
+        postItem(item);
+    }
+}
+
+/**
+ * Removes the to-do list item on click
+ * @param e
+ */
+function removeItem(e) {
+    e.target.parentElement.removeChild(e.target);
+    item = e.target.innerHTML;
+
+    // AJAX call to delete data into database
+    deleteItem(item);
+}
+
+/**
+ * Adds the user's to do list item to database using AJAX call
+ * @param item the to-do list item to be added
+ */
+function postItem(item){
+    data = 'item=' + item;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'post_list_item.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+        if(xhr.status !== 200){
+            return;
+        }
+        // Whatever you wanted to do when server responded with HTTP 200 (OK)
+        // I've added a DIV with id of testdiv to show the result there
+        console.log(this.responseText);
+    };
+    xhr.send(data);
+}
+
+/**
+ * Removes the user's to do list item from the database using AJAX call
+ * @param item the to-do list item to be deleted
+ */
+function deleteItem(item){
+    data = 'item=' + item;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'delete_list_item.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+        if(xhr.status !== 200){
+            return;
+        }
+        console.log(this.responseText);
+    };
+    xhr.send(data);
+}
+
+/**
+ * Gets the to-do item the user types and removes any html injection if any
+ * @param arbitraryHtmlString
+ * @returns {string}
+ */
+function checkForHtmlInjection(arbitraryHtmlString ) {
+    const temp = document.createElement('div');
+    temp.innerHTML = arbitraryHtmlString;
+    return temp.innerText;
+}
+
+// Drag & Drop game
 function enableDragDrop(){
     document.getElementById('q1').setAttribute('draggable', true);
     document.getElementById('q2').setAttribute('draggable', true);
@@ -69,6 +202,9 @@ function dropAnswer(ev){
 
 }
 
+/**
+ * Allows the user to reset the game
+ */
 function resetGame(){
 
     var myNode = document.getElementById("cities");
@@ -149,83 +285,10 @@ function resetGame(){
     enableDragDrop();
 }
 
-window.addEventListener("load", init);
-
-// To Do list implementation
-function newToDoListItem() {
-    var item = document.getElementById("input").value;
-
-    if (item) {
-        var ul = document.getElementById("list");
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode("  + " + item));
-        ul.appendChild(li);
-        document.getElementById("input").value = "";
-        li.onclick = removeItem;
-    }
-}
-
-function removeItem(e) {
-    e.target.parentElement.removeChild(e.target);
-}
-
-
-
-function updateGreeting(){
-
-    var greeting = "Hello, ";
-    var userName = "Test User";
-    var am_pm = null;
-    var currentdate = new Date();
-    var datetime = "Last Sync: " + currentdate.getDate() + "/"
-        + (currentdate.getMonth()+1)  + "/"
-        + currentdate.getFullYear() + " @ "
-        + currentdate.getHours() + ":"
-        + currentdate.getMinutes() + ":"
-        + currentdate.getSeconds();
-
-    var time = currentdate.getHours() + ":"
-        + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-
-    var hour = currentdate.getHours();
-    var min = currentdate.getMinutes();
-
-    if (hour < 12){
-        greeting = "Good Morning";
-        am_pm = "AM";
-    }else if (hour == 12 && min < 60 || hour > 12 &&  hour < 17){
-        greeting = "Good Afternoon";
-        am_pm = "PM";
-    }else{
-        greeting = "Good Evening";
-        am_pm = "PM";
-    }
-
-    document.getElementById("time").innerHTML = time + " " + am_pm;
-
-    userName = "<?php if(array_key_exists('username', $_SESSION)) {echo  $_SESSION["username"];} ?>"
-
-document.getElementById("greeting").innerHTML = greeting + ", " +
-    userName;
-
-    document.getElementById("greeting").innerHTML = greeting + ", " +
-        userName;
-
-    var quotes = new XMLHttpRequest();
-    quotes.onreadystatechange=function() {
-        if (quotes.readyState==4 && quotes.status==200) {
-            var data = JSON.parse(quotes.response);
-            console.log(data);
-            var q = data.contents.quotes[0].quote;
-            document.getElementById("quote").innerHTML="Quote of the day: " + q;
-        }
-    };
-    quotes.open('GET', "http://quotes.rest/qod.json", true);
-    quotes.send();
-
-};
-
-// Weather AJAX Implementation
+// Weather
+/**
+ * Updates weather using AJAX asynchronous call
+ */
 function updateWeather(){
     var weather = new XMLHttpRequest();
 
@@ -246,16 +309,16 @@ function updateWeather(){
     weather.send();
 };
 
-// Weather AJAX Implementation
+// News
+/**
+ * Retrieves and updates top 5 news headlines using AJAX asynchronous call
+ */
 function getNews(){
-    var linebreak = document.createElement("br");
     var news = new XMLHttpRequest();
 
     news.onreadystatechange=function() {
         if (news.readyState==4 && news.status==200) {
             var data = JSON.parse(news.response);
-            console.log(data);
-
             for(i = 0; i < 5; i++){
                 var cityDiv = document.getElementById("news-articles");
                 var newDiv = document.createElement("a");
@@ -271,6 +334,9 @@ function getNews(){
     news.send();
 };
 
+/**
+ * Removes existing news and repopulates the news widget with latest headlines
+ */
 function refreshNews(){
     var myNode = document.getElementById("news-articles");
     var fc = myNode.firstChild;

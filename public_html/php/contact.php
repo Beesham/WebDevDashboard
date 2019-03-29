@@ -8,25 +8,39 @@ if (isset($_POST['submit'])){
           $to="at2187338@gmail.com";
           $headers="reply-to:$email";
           $subject="Contact From ";
-          $body= "Firstname:$firstname\n Lastname:$lastname\n Email:$email\n UserID:$userid \n Message: $message\n File:$file";
+          $body= "Firstname:$firstname\n Lastname:$lastname\n Email:$email\n UserID:$userid \n Message: $message\n";
 
 
- mail($to,$subject,$body,$headers);
+ if (mail($to,$subject,$body,$headers)){
+   header( "Location: /html/success.html" );
+ }
+ else {
+   header( "Location: /html/error.html" );
+ }
 
 }
 ?>
 
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" type="text/css" href="contact.css">
+<link rel="stylesheet" type="text/css" href="/css/contact.css">
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <head>
 <title> Contact us</title>
 <h1> Contact Us </h1>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </head>
 <body>
 
+  <div class="menu">
+  <a href="/php/homepage.php">Home</a>
+  <a href="/html/aboutus.html">About Us</a>
+  <a class="active" href="/php/contact.php">Contact</a>
+  </div>
+
+  <br>
   <div class="contact_box">
-  <form id="contact" action="" method="post">
+  <form id="contact" action="/php/contact.php" method="post">
     <h4> Send Us A Message </h4>
 
     <fieldset>
@@ -45,19 +59,42 @@ if (isset($_POST['submit'])){
       <input placeholder="User name (if you have one)" name="userid" type="text" tabindex="5" >
     </fieldset>
     <fieldset>
-      <textarea placeholder="Type your Message Here...." tabindex="6" name="message"required></textarea>
+      <div id="editor"></div>
     </fieldset>
-
-<fieldset>
-       <input id ="drop"tabindex="7" type="file" name="file" multiple >
-  </fieldset>
-
-
     <fieldset>
-      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" onclick="getMessage()">Submit</button>
     </fieldset>
   </form>
 </div>
+
+<textarea hidden name="message" id="message"></textarea>
+
+<script> //initializing quillJS editor
+  var toolbarOptions = [{'font':[]},
+  {'size': ['small', false, 'large', 'huge']},
+  'bold', 'italic', {'script': 'sub'}, {'script': 'super'},
+  { 'indent': '-1'}, { 'indent': '+1' },
+  {'background': []}, {'color': []}, {'align': []},
+  'link', 'image', 'video'
+  ];
+
+  var quill = new Quill('#editor', {
+    modules: {
+      toolbar: toolbarOptions,
+
+    },
+    placeholder: 'Type your Message Here....',
+    theme: 'snow'
+  });
+</script>
+
+<script> //POST only works with textareas & majority of WYSIWYG editors use contenteditable divs
+         //on submit button click, populate hidden textarea with contents of contenteditable div, which lets POST get message
+  function getMessage(){
+    var x = document.getElementById("editor").textContent;
+    document.getElementById("message").textContent = x;
+  }
+</script>
 
 </body>
 </html>

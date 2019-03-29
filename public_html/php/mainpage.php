@@ -1,10 +1,95 @@
+<!Doctype HTML5>
+<!--
+Author(s): Vithusanan Mathiaparanam
+-->
+
 <?php
     include_once('../utils/HTTPUtils.php');
+    include_once("../utils/UserManager.php");
+    include_once('../../extras/databaseConfig.php');
 
     session_start();
+    $username = $_SESSION['username'];
 
-    if(array_key_exists('logged_in', $_SESSION)) {
-        if($_SESSION['logged_in'] != 'true') HTTPUtils::redirectPage("/php/homepage.php");
+    $usersettings = UserManager::getUserSettings($username);
+
+    if($usersettings->news == "0"){
+      echo '<style type="text/css">
+       #news-container {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       #news-container {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if($usersettings->todo == "0"){
+      echo '<style type="text/css">
+       #todolist {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       #todolist {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if($usersettings->weather == "0"){
+      echo '<style type="text/css">
+       #weather-container {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       #weather-container {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if($usersettings->bio == "0"){ //assuming this is greeting
+      echo '<style type="text/css">
+       .greeting {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       .greeting {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if($usersettings->game == "0"){
+      echo '<style type="text/css">
+       #game {
+           visibility: hidden;
+       }
+       </style>';
+    }
+    else{
+      echo '<style type="text/css">
+       #game {
+           visibility: visible;
+       }
+       </style>';
+    }
+
+    if(!array_key_exists('logged_in', $_SESSION)) {
+        HTTPUtils::redirectPage('/php/homepage.php');
     }
 ?>
 
@@ -20,7 +105,7 @@
 <header class="header">
     <h1 class="logo"><a href="#">MY DASHBOARD</a></h1>
     <ul class="main-nav">
-        <li><a href="#">SETTINGS</a></li>
+        <li><a href="/php/settings.php">SETTINGS</a></li>
         <li><a href="/php/logout_user.php">LOGOUT</a></li>
     </ul>
 </header>
@@ -31,6 +116,13 @@
     <div class="item greeting">
         <div id="time"></div>
         <div id="greeting"></div>
+        <div id="userName">
+            <?php
+            if(array_key_exists('username', $_SESSION)) {
+                echo  $_SESSION['username'];
+            }
+            ?>
+        </div>
         <div id="quote"></div>
     </div>
 
@@ -38,7 +130,15 @@
     <div id="todolist" class="item">
         <input id="input" placeholder="What needs to be done?">
         <button id="inputBttn">Add</button>
-        <ul id="list"></ul>
+        <ul id="list">
+            <?php
+            $toDolist = UserManager::getToDoListItem($username);
+            $arrlength = count($toDolist);
+            for($x = 0; $x < $arrlength; $x++) {
+                print_r("<li onclick=\"removeItem(event);\">$toDolist[$x]</li>");
+            }
+            ?>
+        </ul>
     </div>
 
     <!--Weather tile-->
@@ -73,6 +173,8 @@
 </body>
 <footer id="mainPgFooter">
 
-    <p>About us | Contact us</p>
+    <a href="/html/aboutus.html">About us</a>
+    <a href="/php/contact.php">Contact us</a>
 
 </footer>
+</html>
