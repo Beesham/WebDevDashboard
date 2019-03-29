@@ -76,7 +76,7 @@ function newToDoListItem() {
         document.getElementById("input").value = "";
         li.onclick = removeItem;
 
-        //postItem(item);
+        postItem(item);
     }
 }
 
@@ -86,6 +86,28 @@ function newToDoListItem() {
  */
 function removeItem(e) {
     e.target.parentElement.removeChild(e.target);
+    item = e.target.innerHTML;
+    deleteItem(item);
+}
+
+function deleteItem(item){
+    console.log(item);
+
+    data = 'item=' + item;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'delete_list_item.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+        if(xhr.status !== 200){
+            // Server does not return HTTP 200 (OK) response.
+            // Whatever you wanted to do when server responded with another code than 200 (OK)
+            return; // return is important because the code below is NOT executed if the response is other than HTTP 200 (OK)
+        }
+        // Whatever you wanted to do when server responded with HTTP 200 (OK)
+        // I've added a DIV with id of testdiv to show the result there
+        console.log(this.responseText);
+    };
+    xhr.send(data);
 }
 
 /**
@@ -243,19 +265,24 @@ function resetGame(){
 }
 
 function postItem(item){
-    console.log('in post item method......');
-
-    $.ajax({
-        url:"../php/post_list_item.php",
-        method: "post",
-        data: item,
-        success: function (res){
-            console.log(res);
+    data = 'item=' + item;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'post_list_item.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+        if(xhr.status !== 200){
+            // Server does not return HTTP 200 (OK) response.
+            // Whatever you wanted to do when server responded with another code than 200 (OK)
+            return; // return is important because the code below is NOT executed if the response is other than HTTP 200 (OK)
         }
-    })
-
-    console.log('finishes');
+        // Whatever you wanted to do when server responded with HTTP 200 (OK)
+        // I've added a DIV with id of testdiv to show the result there
+        console.log(this.responseText);
+    };
+    xhr.send(data);
 }
+
+
 
 // Weather
 /**

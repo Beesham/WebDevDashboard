@@ -105,7 +105,21 @@ class DatabaseUtils {
 
     //queries for user todo list. Parses the string into an array
     function queryTodo($username) {
-        //TODO
+        global $conn;
+        $stmt = $conn->prepare("Select username, items
+                                    FROM user_todo
+                                    WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        $userToDoList = array();
+
+        //Need to check of row count is > 0. This does not
+        while($row = $stmt->fetch()) {
+            $userToDoList[] = $row['items'];
+        }
+
+        return $userToDoList;
     }
 
     //queries for user contact list. Parses the string into an array
@@ -185,6 +199,32 @@ class DatabaseUtils {
 
     }
 
+    function deleteToDoListItem($username, $item) {
+        global $conn;
+
+        $stmt = $conn->prepare("DELETE from user_todo 
+                                WHERE  username = :username and items = :item");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':item', $item);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+
+    }
+
+    function addToDoListItem($username, $item){
+        global $conn;
+
+        $stmt = $conn->prepare("INSERT INTO user_todo (username, items)
+                                VALUES (:username, :items)");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':items', $item);
+        if(!$stmt->execute()) {
+            return false;
+        } else return true;
+
+    }
+
     //insert new user
     function insertNewUser($user, $password) {
         global $conn;
@@ -242,7 +282,7 @@ class DatabaseUtils {
                         game boolean DEFAULT 1, 
                         FOREIGN KEY (username) REFERENCES users(username)
                         ON DELETE CASCADE);");
-            $conn->exec("CREATE TABLE user_todo (username varchar(50) not null PRIMARY KEY,
+            $conn->exec("CREATE TABLE user_todo (username varchar(50) not null,
                         items varchar(1024) not null,
                         FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE);");
             $conn->exec("CREATE TABLE user_contactList (username varchar(50) not null PRIMARY KEY,
