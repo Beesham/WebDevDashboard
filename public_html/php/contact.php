@@ -5,7 +5,7 @@ if (isset($_POST['submit'])){
       $email=$_POST['email'];
         $message=$_POST['message'];
           $userid=$_POST['userid'];
-          $to="at2187338@gmail.com";
+          $to="sarendr@uwindsor.ca";
           $headers="reply-to:$email";
           $subject="Contact From ";
           $body= "Firstname:$firstname\n Lastname:$lastname\n Email:$email\n UserID:$userid \n Message: $message\n";
@@ -61,13 +61,13 @@ if (isset($_POST['submit'])){
     <fieldset>
       <div id="editor"></div>
     </fieldset>
+    <textarea hidden name="message" id="message"></textarea>
     <fieldset>
       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" onclick="getMessage()">Submit</button>
     </fieldset>
   </form>
 </div>
 
-<textarea hidden name="message" id="message"></textarea>
 
 <script> //initializing quillJS editor
   var toolbarOptions = [{'font':[]},
