@@ -5,7 +5,7 @@ if (isset($_POST['submit'])){
       $email=$_POST['email'];
         $message=$_POST['message'];
           $userid=$_POST['userid'];
-          $to="sarendr@uwindsor.ca";
+          $to="XXXX@XXX.XX";
           $headers="reply-to:$email";
           $subject="Contact From ";
           $body= "Firstname:$firstname\n Lastname:$lastname\n Email:$email\n UserID:$userid \n Message: $message\n";
