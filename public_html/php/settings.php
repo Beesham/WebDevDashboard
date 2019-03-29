@@ -174,6 +174,16 @@ ZZEOF;
 ZZEOF;
         unset($_SESSION['change_password_success']);
     }
+    
+    if(array_key_exists('settings_updated', $_SESSION) &&
+        ($_SESSION['settings_updated'] == 'true')) {
+        echo <<<ZZEOF
+            <script>
+                alert("Successfully changed settings!");
+            </script>
+ZZEOF;
+        unset($_SESSION['settings_updated']);
+    }
 
 ?>
 
