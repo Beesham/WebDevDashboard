@@ -340,10 +340,14 @@ class DatabaseUtils {
             INSERT INTO `user_info`(`username`, `bio`,`image`) VALUES ('user4@gmail.com', 'Likes birds','');
             INSERT INTO `user_info`(`username`, `bio`,`image`) VALUES ('user5@gmail.com', 'Likes fishes','');
             
-            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user1@gmail.com', 'groceries;rob candy store');
-            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user2@gmail.com', 'dentist;phone home');
-            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user3@gmail.com', 'fix car;guard candy store');
-            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user4@gmail.com', 'build tent;live in tent');");
+            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user1@gmail.com', 'groceries');
+            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user1@gmail.com', 'rob candy store');
+            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user2@gmail.com', 'dentist');
+            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user3@gmail.com', 'fix car');
+            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user3@gmail.com', 'guard candy store');
+            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user4@gmail.com', 'build tent');
+            INSERT INTO `user_todo`(`username`, `items`) VALUES ('user4@gmail.com', 'live in tent');"
+            );
         }
     }
 
