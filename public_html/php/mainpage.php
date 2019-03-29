@@ -5,6 +5,9 @@
 
     session_start();
 
+$toDolist = UserManager::getToDoListItem($username);
+
+
     $username = $_SESSION['username'];
 
     $usersettings = UserManager::getUserSettings($username);
@@ -113,8 +116,8 @@
         <div id="time"></div>
         <div id="greeting"></div>
         <div id="userName">
+
             <?php
-            session_start();
             if(array_key_exists('username', $_SESSION)) {
                 echo  $_SESSION['username'];
             }
@@ -127,7 +130,17 @@
     <div id="todolist" class="item">
         <input id="input" placeholder="What needs to be done?">
         <button id="inputBttn">Add</button>
-        <ul id="list"></ul>
+        <ul id="list">
+
+            <?php
+            $toDolist = UserManager::getToDoListItem($username);
+            $arrlength = count($toDolist);
+            for($x = 0; $x < $arrlength; $x++) {
+                print_r("<li onclick=\"removeItem(event);\">$toDolist[$x]</li>");
+            }
+            ?>
+
+        </ul>
     </div>
 
     <!--Weather tile-->

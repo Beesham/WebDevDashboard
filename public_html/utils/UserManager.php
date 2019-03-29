@@ -3,7 +3,6 @@
 include_once("../utils/DatabaseUtils.php");
 include_once("../utils/HTTPUtils.php");
 include_once("../utils/User.php");
-include_once("../utils/User_Settings.php");
 
 class UserManager {
 
@@ -49,12 +48,6 @@ class UserManager {
         $user->username = $email;
         return $db->insertNewUser($user, $password); //return true or false if insert succeeded
     }
-	
-	static function updateSettings($username, $user_settings) {
-		$db = UserManager::getdb();
-		return $db->updateUserSettings($username, $user_settings);
-	}
-
 
     static function deleteUser($username) {
         $db = UserManager::getdb();
@@ -70,6 +63,22 @@ class UserManager {
         $db = UserManager::getdb();
         return $db->querySettings($username);
     }
+
+    static function addToDoListItem($username, $item) {
+        $db = UserManager::getdb();
+        return $db->addToDoListItem($username, $item);
+    }
+
+    static function getToDoListItem($username) {
+        $db = UserManager::getdb();
+        return $db->queryTodo($username);
+    }
+
+    static function deleteItem($username, $item) {
+        $db = UserManager::getdb();
+        return $db->deleteToDoListItem($username, $item);
+    }
+
 
 }
 ?>
