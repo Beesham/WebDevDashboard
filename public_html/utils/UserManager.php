@@ -1,5 +1,5 @@
 <?php
-//Author: Beesham Sarendranauth
+//Author(s): Beesham Sarendranauth, Vithusanan Mathiaparanam
 include_once("../utils/DatabaseUtils.php");
 include_once("../utils/HTTPUtils.php");
 include_once("../utils/User.php");

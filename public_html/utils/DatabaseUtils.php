@@ -1,5 +1,5 @@
 <?php
-//Author(s): Beesham Sarendranauth
+//Author(s): Beesham Sarendranauth, Vithusanan Mathiaparanam
 include_once 'User.php';
 include_once ('User_Settings.php');
 include_once '../../extras/databaseConfig.php';

@@ -1,13 +1,14 @@
+<!Doctype HTML5>
+<!--
+Author(s): Vithusanan Mathiaparanam
+-->
+
 <?php
     include_once('../utils/HTTPUtils.php');
     include_once("../utils/UserManager.php");
     include_once('../../extras/databaseConfig.php');
 
     session_start();
-
-$toDolist = UserManager::getToDoListItem($username);
-
-
     $username = $_SESSION['username'];
 
     $usersettings = UserManager::getUserSettings($username);
@@ -116,7 +117,6 @@ $toDolist = UserManager::getToDoListItem($username);
         <div id="time"></div>
         <div id="greeting"></div>
         <div id="userName">
-
             <?php
             if(array_key_exists('username', $_SESSION)) {
                 echo  $_SESSION['username'];
@@ -131,7 +131,6 @@ $toDolist = UserManager::getToDoListItem($username);
         <input id="input" placeholder="What needs to be done?">
         <button id="inputBttn">Add</button>
         <ul id="list">
-
             <?php
             $toDolist = UserManager::getToDoListItem($username);
             $arrlength = count($toDolist);
@@ -139,7 +138,6 @@ $toDolist = UserManager::getToDoListItem($username);
                 print_r("<li onclick=\"removeItem(event);\">$toDolist[$x]</li>");
             }
             ?>
-
         </ul>
     </div>
 
