@@ -4,7 +4,6 @@ include_once("../utils/UserManager.php");
 include_once("login_user.php");
 include_once("../utils/HTTPUtils.php");
 
-session_start();
 if(array_key_exists('firstname', $_POST) &&
    array_key_exists('lastname', $_POST) &&
    array_key_exists('email', $_POST) &&
@@ -15,7 +14,7 @@ if(array_key_exists('firstname', $_POST) &&
         $_SESSION['firstname'] = $_POST['firstname'];
         $_SESSION['lastname'] = $_POST['lastname'];
         $_SESSION['email'] = $_POST['email'];
-        $_SESSION['registration_error'] = failed;     
+        $_SESSION['registration_error'] = 'failed';     
                 
         HTTPUtils::redirectPage("/php/homepage.php");
     } else {
